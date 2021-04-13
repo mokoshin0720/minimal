@@ -120,6 +120,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# Userモデルについて
 AUTH_USER_MODEL = 'minimal.CustomUser'
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
+
+# 画像の保存先
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'

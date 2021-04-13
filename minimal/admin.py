@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser
+from .models import CustomUser, MinimalModel
 
 # Register your models here.
 class CustomUserAdmin(UserAdmin):
@@ -9,3 +9,4 @@ class CustomUserAdmin(UserAdmin):
     list_display = ['username', 'email', 'age']
 
 admin.site.register(CustomUser, CustomUserAdmin)
+admin.site.register(MinimalModel)
