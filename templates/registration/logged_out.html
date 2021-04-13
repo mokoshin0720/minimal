@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-<html>
- 
-<head>
-    <meta charset="utf-8" />
-    <title>ログアウト画面</title>
-</head>
- 
-<body>
+{% extends 'base.html' %}
+
+{% block content %}
     <h1>ログアウト画面</h1>
     <p>ログアウトしました</p>
     <p><a href="{% url 'login' %}">ログイン画面へ</a></p>
-</body>
- 
-</html>
+{% endblock %}

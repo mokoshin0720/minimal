@@ -13,6 +13,12 @@
     {% endblock customcss %}
   </head>
   <body>
+    <a href="{% url 'home' %}" class="btn btn-info btn"  role="button">ホーム画面</a>
+    <a href="{% url 'index' %}" class="btn btn-info btn"  role="button">トップ画面</a>
+    <a href="{% url 'signup' %}" class="btn btn-info btn"  role="button">ユーザー登録</a>
+    <a href="{% url 'list' %}" class="btn btn-info btn"  role="button">リスト画面</a>
+    <a href="{% url 'login' %}" class="btn btn-info btn"  role="button">ログイン</a>
+    <a href="{% url 'logout' %}" class="btn btn-info btn"  role="button">ログアウト</a>
     {% block header %}
     {% endblock header %}
 
