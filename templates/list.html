@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<div class="alert alert-primary" role="alert">
+  <h3>Minimal App</h3>
+</div>
+{% endblock header %}
+
+{% block content %}
+<div class="container">
+    {% for obj in object_list %}
+    <div class="alert alert-success" role="alert">
+     <p>タイトル：{{ obj.title }}</p>
+     <p>投稿者： {{ obj.author }}</p>
+    </div>
+    {% endfor %}
+</div> 
+{% endblock content %}

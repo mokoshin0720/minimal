@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from .forms import SignUpForm
+from .models import MinimalModel
 
 # Create your views here.
 
@@ -25,3 +26,7 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
+
+def list(request):
+    object_list = MinimalModel.objects.all()
+    return render(request, 'list.html', {'object_list': object_list})
