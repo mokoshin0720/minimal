@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from .forms import SignUpForm
@@ -27,6 +27,12 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
 
+@login_required
 def list(request):
     object_list = MinimalModel.objects.all()
     return render(request, 'list.html', {'object_list': object_list})
+
+@login_required
+def detail(request, pk):
+    object = get_object_or_404(MinimalModel, pk=pk)
+    return render(request, 'detail.html', {'object': object})

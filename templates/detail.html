@@ -2,17 +2,16 @@
 
 {% block header %}
 <div class="alert alert-primary" role="alert">
-  <h3>Minimal App</h3>
+  <h3>詳細ページ</h3>
 </div>
 {% endblock header %}
 
 {% block content %}
 <div class="container">
-    {% for obj in object_list %}
     <div class="alert alert-success" role="alert">
-     <p>タイトル：<a href="{% url 'detail' obj.pk %}"> {{ obj.title }}</a></p>
-     <p>投稿者： {{ obj.author }}</p>
+     <p>タイトル： {{ object.title }}</p>
+     <p>投稿者： {{ object.author }}</p>
+     <p><img src="{{ object.sns_image.url }}" width=300></p>
     </div>
-    {% endfor %}
-</div> 
+</div>
 {% endblock content %}
