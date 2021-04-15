@@ -10,7 +10,8 @@
 <div class="container">
     <div class="alert alert-success" role="alert">
       <p>タイトル： {{ object.title }}</p>
-      <p>投稿者： {{ object.author }}</p>
+      <p>投稿者： <a href="{% url 'user_detail' object.author.id %}">{{ object.author }}</a></p>
+
       <p>購入理由： {{ object.buy_reason }}</p>
 
       {% if object.sell_reason %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<div class="alert alert-primary" role="alert">
+  <h3>ユーザー情報</h3>
+</div>
+{% endblock header %}
+
+{% block content %}
+<div class="container">
+    <div class="alert alert-success" role="alert">
+      <p>ユーザー名： {{ user.username }}</p>
+      <p>メールアドレス： {{ user.email }}</p>
+    </div>
+    {% comment %} {% if object.author == current_user %}
+      <a href="{% url 'delete' object.pk %}">削除</a>
+      <a href="{% url 'update' object.pk %}">編集</a>
+    {% endif %} {% endcomment %}
+</div>
+{% endblock content %}
