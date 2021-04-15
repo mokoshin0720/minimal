@@ -11,7 +11,7 @@ class MinimalModel(models.Model):
     author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     buy_reason = models.TextField()
     sell_reason = models.TextField(null=True, blank=True)
-    obj_image = models.ImageField(upload_to='media')
+    obj_image = models.ImageField(upload_to='')
     buy_date = models.DateField()
     buy_price = models.IntegerField()
     sell_price = models.IntegerField(null=True, blank=True)

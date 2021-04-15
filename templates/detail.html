@@ -9,9 +9,12 @@
 {% block content %}
 <div class="container">
     <div class="alert alert-success" role="alert">
-     <p>タイトル： {{ object.title }}</p>
-     <p>投稿者： {{ object.author }}</p>
-     <p><img src="{{ object.sns_image.url }}" width=300></p>
+      <p>タイトル： {{ object.title }}</p>
+      <p>投稿者： {{ object.author }}</p>
+      <p><img src="{{ object.sns_image.url }}" width=300></p>
     </div>
+    {% if object.author == current_user %}
+      <a href="{% url 'delete' object.pk %}">削除</a>
+    {% endif %}
 </div>
 {% endblock content %}

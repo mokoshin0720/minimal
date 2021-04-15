@@ -35,7 +35,8 @@ def list(request):
 @login_required
 def detail(request, pk):
     object = get_object_or_404(MinimalModel, pk=pk)
-    return render(request, 'detail.html', {'object': object})
+    current_user = request.user
+    return render(request, 'detail.html', {'object': object, 'current_user': current_user})
 
 @login_required
 def create(request):
@@ -49,3 +50,9 @@ def create(request):
     else:
         form = ThingForm
     return render(request, 'create.html', {'form': form})
+
+@login_required
+def delete(request, pk):
+    post = get_object_or_404(MinimalModel, pk=pk)
+    post.delete()
+    return redirect('list')
