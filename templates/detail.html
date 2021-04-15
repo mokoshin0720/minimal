@@ -12,7 +12,21 @@
       <p>タイトル： {{ object.title }}</p>
       <p>投稿者： {{ object.author }}</p>
       <p>購入理由： {{ object.buy_reason }}</p>
-      <p>購入金額： {{ object.buy_price }}</p>
+
+      {% if object.sell_reason %}
+      <p>売却理由： {{ object.sell_reason }}</p>
+      {% else %}
+      <p>売却理由： </p>
+      {% endif %}
+
+      <p>購入金額： {{ object.buy_price }}円</p>
+
+      {% if object.sell_price %}
+      <p>売却金額： {{ object.sell_price }}円</p>
+      {% else %}
+      <p>売却金額： </p>
+      {% endif %}
+
       <p>購入日： {{ object.buy_date }}</p>
       <p><img src="{{ object.obj_image.url }}" width=500></p>
     </div>
