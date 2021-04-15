@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.contrib.auth import get_user_model
 
 # Create your models here.
 class CustomUser(AbstractUser):
@@ -7,7 +8,7 @@ class CustomUser(AbstractUser):
 
 class MinimalModel(models.Model):
     title = models.CharField(max_length=100)
-    author = models.CharField(max_length=50)
+    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     buy_reason = models.TextField()
     sell_reason = models.TextField(null=True, blank=True)
     obj_image = models.ImageField(upload_to='media')

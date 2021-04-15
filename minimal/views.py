@@ -37,33 +37,14 @@ def detail(request, pk):
     object = get_object_or_404(MinimalModel, pk=pk)
     return render(request, 'detail.html', {'object': object})
 
-# @login_required
-# def create(request):
-#     if request.method == 'POST':
-#         form = ThingForm(request.POST)
-#         if form.is_valid():
-#             thing = MinimalModel()
-#             print('Here')
-#             thing.title = request.POST['title']
-#             thing.author = request.user
-#             thing.buy_reason = request.POST['buy_reason']
-#             thing.sell_reason = request.POST['sell_reason']
-#             thing.obj_image = request.FILES['obj_image']
-#             thing.buy_date = request.POST['buy_date']
-#             thing.buy_price = request.POST['buy_price']
-#             thing.save()            
-
-#             return redirect('list')
-#     else:
-#         form = ThingForm
-#     return render(request, 'create.html', {'form': form})
-
 @login_required
 def create(request):
     if request.method == 'POST':
         form = ThingForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()            
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()            
             return redirect('list')
     else:
         form = ThingForm

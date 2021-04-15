@@ -31,4 +31,4 @@ class SignUpForm(UserCreationForm):
 class ThingForm(forms.ModelForm):
     class Meta:
         model = MinimalModel
-        fields = ('title', 'author', 'buy_reason', 'obj_image', 'buy_date', 'buy_price')
+        fields = ('title', 'buy_reason', 'obj_image', 'buy_date', 'buy_price')
