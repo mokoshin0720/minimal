@@ -32,3 +32,8 @@ class ThingForm(forms.ModelForm):
     class Meta:
         model = MinimalModel
         fields = ('title', 'buy_reason', 'obj_image', 'buy_date', 'buy_price')
+
+class ThingUpdateForm(forms.ModelForm):
+    class Meta:
+        model = MinimalModel
+        fields = ('title', 'buy_reason', 'sell_reason' , 'obj_image', 'buy_date', 'buy_price', 'sell_price')

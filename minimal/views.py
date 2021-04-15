@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
-from .forms import SignUpForm, ThingForm
+from .forms import SignUpForm, ThingForm, ThingUpdateForm
 from .models import MinimalModel
 
 # Create your views here.
@@ -50,6 +50,26 @@ def create(request):
     else:
         form = ThingForm
     return render(request, 'create.html', {'form': form})
+
+@login_required
+def update(request, pk):
+    if pk:
+        object = get_object_or_404(MinimalModel, pk = pk)
+    else:
+        object = MinimalModel()
+    
+    if request.method == 'POST':
+        form = ThingUpdateForm(request.POST, request.FILES, instance=object)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            return redirect('list')
+    else:
+        form = ThingUpdateForm(instance=object)
+    
+    return render(request, 'update.html', {'form': form})
+
 
 @login_required
 def delete(request, pk):
