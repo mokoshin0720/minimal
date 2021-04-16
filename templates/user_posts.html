@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<div class="alert alert-primary" role="alert">
+  <h3>{{ user.username }}の投稿</h3>
+</div>
+{% endblock header %}
+
+{% block content %}
+<div class="container">
+    {% for obj in object_list %}
+        {% if obj.author.id == user.id %}
+            <div class="alert alert-success" role="alert">
+            <p>タイトル：<a href="{% url 'detail' obj.pk %}"> {{ obj.title }}</a></p>
+            <p>投稿者： {{ obj.author }}</p>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div> 
+{% endblock content %}

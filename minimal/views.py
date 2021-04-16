@@ -84,3 +84,8 @@ def signup(request):
 def user_detail(request, pk):
     user = get_object_or_404(CustomUser, pk=pk)
     return render(request, 'user_detail.html', {'user': user})
+
+def user_posts(request, pk):
+    user = get_object_or_404(CustomUser, pk=pk)
+    object_list = MinimalModel.objects.all()
+    return render(request, 'user_posts.html', {'user':user, 'object_list': object_list})
