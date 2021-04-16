@@ -12,6 +12,7 @@
       <p>タイトル： {{ object.title }}</p>
       <p>投稿者： <a href="{% url 'user_detail' object.author.id %}">{{ object.author }}</a></p>
 
+      <p>物の状況： {{ object.status }}</p>
       <p>購入理由： {{ object.buy_reason }}</p>
 
       {% if object.sell_reason %}

@@ -9,7 +9,7 @@ from .models import CustomUser, MinimalModel
 def index(request):
     return render(request, 'index.html')
 
-@login_required # 非ログイン状態→LOGIN_URLに飛ばす
+@login_required
 def home(request):
     return render(request, 'home.html')
 
