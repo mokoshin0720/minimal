@@ -3,18 +3,19 @@
 {% block header %}
 <div class="alert alert-primary" role="alert">
   <h3>{{ user.username }}の投稿</h3>
+  <p>満足： {{ satisfied.count }}個</p>
+  <p>手放し予定： {{ planed.count }}個</p>
+  <p>手放した： {{ threw.count }}個</p>
 </div>
 {% endblock header %}
 
 {% block content %}
 <div class="container">
     {% for obj in object_list %}
-        {% if obj.author.id == user.id %}
-            <div class="alert alert-success" role="alert">
+        <div class="alert alert-success" role="alert">
             <p>タイトル：<a href="{% url 'detail' obj.pk %}"> {{ obj.title }}</a></p>
             <p>投稿者： {{ obj.author }}</p>
-            </div>
-        {% endif %}
+        </div>
     {% endfor %}
 </div> 
 {% endblock content %}

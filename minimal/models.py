@@ -7,10 +7,10 @@ class CustomUser(AbstractUser):
     age = models.IntegerField(null=True)
 
 class ThingStatus(models.Model):
-    status = models.CharField('物の状況', max_length=50)
+    name = models.CharField('物の状況', max_length=50)
     
     def __str__(self):
-        return self.status
+        return self.name
 
 class MinimalModel(models.Model):
     title = models.CharField(max_length=100)

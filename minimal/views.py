@@ -87,5 +87,8 @@ def user_detail(request, pk):
 
 def user_posts(request, pk):
     user = get_object_or_404(CustomUser, pk=pk)
-    object_list = MinimalModel.objects.all()
-    return render(request, 'user_posts.html', {'user':user, 'object_list': object_list})
+    object_list = MinimalModel.objects.filter(author=user)
+    satisfied = MinimalModel.objects.filter(author=user, status__name='満足')
+    planed = MinimalModel.objects.filter(author=user, status__name='手放し予定')
+    threw = MinimalModel.objects.filter(author=user, status__name='手放した')
+    return render(request, 'user_posts.html', {'user':user, 'object_list': object_list, 'satisfied': satisfied, 'planed': planed, 'threw': threw})
