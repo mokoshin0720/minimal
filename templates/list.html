@@ -12,6 +12,7 @@
     <div class="alert alert-success" role="alert">
      <p>タイトル：<a href="{% url 'detail' obj.pk %}"> {{ obj.title }}</a></p>
      <p>投稿者： <a href="{% url 'user_posts' obj.author.id %}">{{ obj.author }}</a></p>
+     <p><img src="{{ obj.author.image.url }}" width=50></p>
     </div>
     {% endfor %}
 </div> 

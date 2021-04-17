@@ -11,10 +11,7 @@
     <div class="alert alert-success" role="alert">
       <p>ユーザー名： {{ user.username }}</p>
       <p>メールアドレス： {{ user.email }}</p>
+      <p><img src="{{ user.image.url }}" width=500></p>
     </div>
-    {% comment %} {% if object.author == current_user %}
-      <a href="{% url 'delete' object.pk %}">削除</a>
-      <a href="{% url 'update' object.pk %}">編集</a>
-    {% endif %} {% endcomment %}
 </div>
 {% endblock content %}

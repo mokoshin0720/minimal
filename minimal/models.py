@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 
 # Create your models here.
 class CustomUser(AbstractUser):
-    age = models.IntegerField(null=True)
+    image = models.ImageField(upload_to='', verbose_name='プロフィール画像', default='zebra0.jpg')
 
 class ThingStatus(models.Model):
     name = models.CharField('物の状況', max_length=50)

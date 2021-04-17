@@ -5,8 +5,8 @@ from .models import CustomUser, MinimalModel, ThingStatus
 # Register your models here.
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
-    fieldsets = UserAdmin.fieldsets + ((None, {'fields': ('age', )}),) # 管理サイトの編集画面にageを追加
-    list_display = ['username', 'email', 'age']
+    fieldsets = UserAdmin.fieldsets + ((None, {'fields': ('image', )}),) # 管理サイトの編集画面にageを追加
+    list_display = ['username', 'email', 'image']
 
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(MinimalModel)
