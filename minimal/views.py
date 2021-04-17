@@ -11,7 +11,8 @@ def index(request):
 
 @login_required
 def home(request):
-    return render(request, 'home.html')
+    user = request.user
+    return render(request, 'home.html', {'user':user})
 
 @login_required
 def list(request):

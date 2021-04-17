@@ -6,4 +6,5 @@
     <p>こんにちは{{ user.username }}さん</p>
  
     <p><a href="{% url 'logout' %}">ログアウト</a></p>
+    <p><a href="{% url 'user_detail' user.id %}">ユーザー詳細</a></p>
 {% endblock %}
