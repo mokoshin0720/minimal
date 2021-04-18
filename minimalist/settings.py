@@ -119,6 +119,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles' # 本番環境に使われる
+STATICFILES_DIR = [str(BASE_DIR / 'static')] # アプリごとにCSSを変えられるようにする（開発用）
 
 # Userモデルについて
 AUTH_USER_MODEL = 'minimal.CustomUser'
