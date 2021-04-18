@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<div class="alert alert-primary" role="alert">
+  <h3><a href="{% url 'user_posts' user.id %}">{{ user.username }}</a>の投稿</h3>
+  <p>満足： {{ planed_list.count }}個</p>
+</div>
+{% endblock header %}
+
+{% block content %}
+<div class="container">
+    {% for planed_obj in planed_list %}
+        <div class="alert alert-success" role="alert">
+            <p>タイトル：<a href="{% url 'detail' planed_obj.pk %}"> {{ planed_obj.title }}</a></p>
+            <p>投稿者： {{ planed_obj.author }}</p>
+        </div>
+    {% endfor %}
+</div> 
+{% endblock content %}

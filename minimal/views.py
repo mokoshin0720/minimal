@@ -81,15 +81,31 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
 
-
 def user_detail(request, pk):
     user = get_object_or_404(CustomUser, pk=pk)
     return render(request, 'user_detail.html', {'user': user})
 
-def user_posts(request, pk):
+# ユーザー投稿ページに必要なデータを取ってくる関数
+def user_posts_base(pk):
     user = get_object_or_404(CustomUser, pk=pk)
     object_list = MinimalModel.objects.filter(author=user)
-    satisfied = MinimalModel.objects.filter(author=user, status__name='満足')
-    planed = MinimalModel.objects.filter(author=user, status__name='手放し予定')
-    threw = MinimalModel.objects.filter(author=user, status__name='手放した')
-    return render(request, 'user_posts.html', {'user':user, 'object_list': object_list, 'satisfied': satisfied, 'planed': planed, 'threw': threw})
+    satisfied_list = MinimalModel.objects.filter(author=user, status__name='満足')
+    planed_list = MinimalModel.objects.filter(author=user, status__name='手放し予定')
+    threw_list = MinimalModel.objects.filter(author=user, status__name='手放した')
+    return user, object_list, satisfied_list, planed_list, threw_list
+
+def user_posts(request, pk):
+    user, object_list, satisfied_list, planed_list, threw_list = user_posts_base(pk)
+    return render(request, 'user_posts.html', {'user':user, 'object_list': object_list, 'satisfied_list': satisfied_list, 'planed_list': planed_list, 'threw_list': threw_list})
+
+def user_posts_satisfied(request, pk):
+    user, _, satisfied_list, _, _ = user_posts_base(pk)
+    return render(request, 'user_posts_satisfied.html', {'user':user, 'satisfied_list': satisfied_list})
+
+def user_posts_planed(request, pk):
+    user, _, _, planed_list, _ = user_posts_base(pk)
+    return render(request, 'user_posts_planed.html', {'user':user, 'planed_list': planed_list})
+
+def user_posts_threw(request, pk):
+    user, _, _, _, threw_list = user_posts_base(pk)
+    return render(request, 'user_posts_threw.html', {'user':user, 'threw_list': threw_list})

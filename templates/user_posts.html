@@ -2,10 +2,10 @@
 
 {% block header %}
 <div class="alert alert-primary" role="alert">
-  <h3>{{ user.username }}の投稿</h3>
-  <p>満足： {{ satisfied.count }}個</p>
-  <p>手放し予定： {{ planed.count }}個</p>
-  <p>手放した： {{ threw.count }}個</p>
+  <h3><a href="{% url 'user_posts' user.id %}">{{ user.username }}</a>の投稿</h3>
+  <p><a href="{% url 'user_posts_satisfied' user.id %}">満足</a>： {{ satisfied_list.count }}個</p>
+  <p><a href="{% url 'user_posts_planed' user.id %}">手放し予定</a>： {{ planed_list.count }}個</p>
+  <p><a href="{% url 'user_posts_threw' user.id %}">手放した</a>： {{ threw_list.count }}個</p>
 </div>
 {% endblock header %}
 
