@@ -1,10 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth import get_user_model
+import cloudinary
+from cloudinary.models import CloudinaryField
 
 # Create your models here.
 class CustomUser(AbstractUser):
-    image = models.ImageField(upload_to='', verbose_name='プロフィール画像', default='zebra0.jpg')
+    image = models.CloudinaryField('image', verbose_name='プロフィール画像', default='zebra0.jpg')
 
 class ThingStatus(models.Model):
     name = models.CharField('物の状況', max_length=50)
@@ -18,7 +20,7 @@ class MinimalModel(models.Model):
     buy_reason = models.TextField()
     sell_reason = models.TextField(null=True, blank=True)
     status = models.ForeignKey(ThingStatus, verbose_name='物の状況', on_delete=models.PROTECT)
-    obj_image = models.ImageField(upload_to='')
+    obj_image = models.CloudinaryField('obj_image', blank=True, null=True)
     buy_date = models.DateField()
     buy_price = models.IntegerField()
     sell_price = models.IntegerField(null=True, blank=True)

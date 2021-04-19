@@ -90,7 +90,7 @@ def user_posts_base(pk):
     user = get_object_or_404(CustomUser, pk=pk)
     object_list = MinimalModel.objects.filter(author=user)
     satisfied_list = MinimalModel.objects.filter(author=user, status__name='満足')
-    planed_list = MinimalModel.objects.filter(author=user, status__name='手放し予定')
+    planed_list = MinimalModel.objects.filter(author=user, status__name='手放すかも')
     threw_list = MinimalModel.objects.filter(author=user, status__name='手放した')
     return user, object_list, satisfied_list, planed_list, threw_list
 

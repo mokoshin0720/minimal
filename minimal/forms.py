@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 # from django.contrib.auth.models import User
 from .models import CustomUser, MinimalModel
+import cloudinary
+from cloudinary.models import CloudinaryField
 
 class SignUpForm(UserCreationForm):
     last_name = forms.CharField(
@@ -33,7 +35,13 @@ class ThingForm(forms.ModelForm):
         model = MinimalModel
         fields = ('title', 'buy_reason', 'obj_image', 'buy_date', 'buy_price', 'status')
 
+    obj_image = CloudinaryFileField(
+            options={'folder': 'media/', 'tags': 'MinimalModel'})
+
 class ThingUpdateForm(forms.ModelForm):
     class Meta:
         model = MinimalModel
         fields = ('title', 'buy_reason', 'sell_reason' , 'obj_image', 'buy_date', 'buy_price', 'sell_price', 'status')
+
+    obj_image = CloudinaryFileField(
+            options={'folder': 'media/', 'tags': 'MinimalModel'})
