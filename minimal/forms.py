@@ -28,6 +28,11 @@ class SignUpForm(UserCreationForm):
         model = CustomUser
         fields = ('username', 'last_name', 'first_name', 'email', 'password1', 'password2')
 
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ('username', 'last_name', 'first_name', 'email', 'image', 'password')
+
 class ThingForm(forms.ModelForm):
     class Meta:
         model = MinimalModel

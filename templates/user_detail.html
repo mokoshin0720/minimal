@@ -14,4 +14,5 @@
       <p><img src="{{ user.image.url }}" width=500></p>
     </div>
 </div>
+<a href="{% url 'user_update' user.id %}">編集</a>
 {% endblock content %}

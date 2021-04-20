@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
-from .forms import SignUpForm, ThingForm, ThingUpdateForm
+from .forms import SignUpForm, ThingForm, ThingUpdateForm, UserUpdateForm
 from .models import CustomUser, MinimalModel
 
 # Create your views here.
@@ -43,7 +43,7 @@ def detail(request, pk):
 @login_required
 def update(request, pk):
     if pk:
-        object = get_object_or_404(MinimalModel, pk = pk)
+        object = get_object_or_404(MinimalModel, pk=pk)
     else:
         object = MinimalModel()
     
@@ -85,6 +85,36 @@ def user_detail(request, pk):
     user = get_object_or_404(CustomUser, pk=pk)
     return render(request, 'user_detail.html', {'user': user})
 
+def user_update(request, pk):
+    if pk:
+        user = get_object_or_404(CustomUser, pk=pk)
+    else:
+        user = CustomUser()
+
+    initial_data = {
+        'username': user.username,
+        'last_name': user.last_name, 
+        'first_name': user.first_name, 
+        'email': user.email,
+        'password': '',
+    }
+
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST, request.FILES, instance=user)
+        if form.is_valid():
+            user = form.save(commit=False)
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user.set_password(password)
+            user.save()
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            return redirect('list')
+    else:
+        form = UserUpdateForm(initial=initial_data, instance=user)
+    
+    return render(request, 'user_update.html', {'form': form, 'user': user})
+    
 # ユーザー投稿ページに必要なデータを取ってくる関数
 def user_posts_base(pk):
     user = get_object_or_404(CustomUser, pk=pk)
