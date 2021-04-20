@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 
 # Create your models here.
 class CustomUser(AbstractUser):
-    image = models.ImageField(upload_to='', blank=True, null=True, verbose_name='プロフィール画像')
+    image = models.ImageField(upload_to='', blank=True, null=True, verbose_name='プロフィール画像', default='default_user_icon.jpeg')
 
 class ThingStatus(models.Model):
     name = models.CharField('物の状況', max_length=50)
@@ -18,7 +18,7 @@ class MinimalModel(models.Model):
     buy_reason = models.TextField()
     sell_reason = models.TextField(null=True, blank=True)
     status = models.ForeignKey(ThingStatus, verbose_name='物の状況', on_delete=models.PROTECT)
-    obj_image = models.ImageField(upload_to='', blank=True, null=True)
+    obj_image = models.ImageField(upload_to='', blank=True, null=True, default='default_thing_icon.png')
     buy_date = models.DateField()
     buy_price = models.IntegerField()
     sell_price = models.IntegerField(null=True, blank=True)
