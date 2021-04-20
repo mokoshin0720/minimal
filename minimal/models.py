@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth import get_user_model
+from django.utils import timezone
 
 # Create your models here.
 class CustomUser(AbstractUser):
@@ -26,3 +27,8 @@ class MinimalModel(models.Model):
 
     def __str__(self):
         return self.title
+
+class Like(models.Model):
+    thing = models.ForeignKey(MinimalModel, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    timestamp = models.DateField(default=timezone.now)

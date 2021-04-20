@@ -2,9 +2,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from .forms import SignUpForm, ThingForm, ThingUpdateForm, UserUpdateForm
-from .models import CustomUser, MinimalModel
-
-# Create your views here.
+from .models import CustomUser, Like, MinimalModel
+from django.http import JsonResponse
 
 def index(request):
     return render(request, 'index.html')
@@ -16,8 +15,38 @@ def home(request):
 
 @login_required
 def list(request):
-    object_list = MinimalModel.objects.all()
-    return render(request, 'list.html', {'object_list': object_list})
+    objects = MinimalModel.objects.all()
+    liked_list = []
+    for object in objects:
+        liked = object.like_set.filter(user=request.user)
+        if liked.exists():
+            liked_list.append(object.id)
+    context = {
+        'objects': objects,
+        'liked_list': liked_list,
+    }
+    return render(request, 'list.html', context)
+
+def like(request):
+    if request.method == 'POST':
+        thing = get_object_or_404(MinimalModel, pk=request.POST.get('object_id'))
+        user = request.user
+        liked = False
+        like = Like.objects.filter(thing=thing, user=user)
+        if like.exists():
+            like.delete()
+        else:
+            like.create(thing=thing, user=user)
+            liked=True
+        
+        context = {
+            'object_id': thing.id,
+            'liked': liked,
+            'count': thing.like_set.count(),
+        }
+
+    if request.is_ajax():
+        return JsonResponse(context)
 
 # 以下、投稿に関するview
 @login_required
