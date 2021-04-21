@@ -3,7 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from .forms import SignUpForm, ThingForm, ThingUpdateForm, UserUpdateForm
 from .models import CustomUser, Like, MinimalModel
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseServerError
+from django.views.decorators.csrf import requires_csrf_token
 
 def index(request):
     return render(request, 'index.html')
