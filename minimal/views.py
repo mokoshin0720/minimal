@@ -180,4 +180,7 @@ def user_posts_threw(request, pk):
 # 自作server_error
 @requires_csrf_token
 def my_customized_server_error(request, template_name='500.html'):
-    return HttpResponseServerError('<h1>Server Error (500)だよー</h1>')
+    import sys
+    from django.views import debug
+    error_html = debug.technical_500_response(request, *sys.exc_info()).content
+    return HttpResponseServerError(error_html)
