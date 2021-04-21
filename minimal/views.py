@@ -175,3 +175,8 @@ def user_posts_planed(request, pk):
 def user_posts_threw(request, pk):
     user, _, _, _, threw_list = user_posts_base(pk)
     return render(request, 'user_posts_threw.html', {'user':user, 'threw_list': threw_list})
+
+# 自作server_error
+@requires_csrf_token
+def my_customized_server_error(request, template_name='500.html'):
+    return HttpResponseServerError('<h1>Server Error (500)だよー</h1>')
