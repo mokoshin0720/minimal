@@ -6,3 +6,4 @@ django-heroku
 dj-database-url
 django-storages
 boto3
+whitenoise
