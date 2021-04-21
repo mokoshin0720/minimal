@@ -16,7 +16,5 @@ urlpatterns = [
     path('user_posts/<int:pk>', views.user_posts, name='user_posts'),
     path('user_posts/satisfied/<int:pk>', views.user_posts_satisfied, name='user_posts_satisfied'),
     path('user_posts/planed/<int:pk>', views.user_posts_planed, name='user_posts_planed'),
-    path('user_posts/threw/<int:pk>', views.user_posts_threw, name='user_posts_threw'),
+    path('user_posts/threw/<int:pk>', views.user_posts_threw, name='user_posts_threw'),   
 ]
-
-handler500 = views.my_customized_server_error
