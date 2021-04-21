@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block customcss %}
+    <link href="{% static 'header.css' %}" rel="stylesheet">
+{% endblock customcss %}
+
 {% block content %}
     <h1>トップ画面</h1>
  
