@@ -32,3 +32,6 @@ class Like(models.Model):
     thing = models.ForeignKey(MinimalModel, on_delete=models.CASCADE)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     timestamp = models.DateField(default=timezone.now)
+
+    def __str__(self):
+        return str(self.thing.id)
