@@ -1,3 +1,4 @@
+{% if user.is_authenticated %}
 <form action="{% url 'like' %}" method="POST">
     {% csrf_token %}
     {% if object.id in liked_list %}
@@ -7,3 +8,8 @@
     {% endif %}
 </form>
 <p name="{{ object.id }}-count" class="count"> {{ object.like_set.count }} </p>
+
+{% else %}
+<p id="like" name="{{ object.id }}"><i class="fas fa-lg fa-heart like-red"></i>アイコンを挿入</p>
+<p name="{{ object.id }}-count" class="count"> {{ object.like_set.count }} </p>
+{% endif %}

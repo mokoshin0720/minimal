@@ -13,20 +13,25 @@ def home(request):
     user = request.user
     return render(request, 'home.html', {'user':user})
 
-@login_required
 def list(request):
     objects = MinimalModel.objects.all()
-    liked_list = []
-    for object in objects:
-        liked = object.like_set.filter(user=request.user)
-        if liked.exists():
-            liked_list.append(object.id)
-    context = {
-        'objects': objects,
-        'liked_list': liked_list,
-    }
-    return render(request, 'list.html', context)
 
+    if request.user.is_authenticated:
+        liked_list = []
+        for object in objects:
+            liked = object.like_set.filter(user=request.user)
+            if liked.exists():
+                liked_list.append(object.id)
+        context = {
+            'objects': objects,
+            'liked_list': liked_list,
+        }
+        return render(request, 'list.html', context)
+
+    else:
+        return render(request, 'list.html', {'objects': objects})
+
+@login_required
 def like(request):
     if request.method == 'POST':
         thing = get_object_or_404(MinimalModel, pk=request.POST.get('object_id'))
@@ -110,10 +115,12 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
 
+@login_required
 def user_detail(request, pk):
     user = get_object_or_404(CustomUser, pk=pk)
     return render(request, 'user_detail.html', {'user': user})
 
+@login_required
 def user_update(request, pk):
     if pk:
         user = get_object_or_404(CustomUser, pk=pk)
