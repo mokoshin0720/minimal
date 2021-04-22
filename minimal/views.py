@@ -72,8 +72,7 @@ def create(request):
 def detail(request, pk):
     object = get_object_or_404(MinimalModel, pk=pk)
     current_user = request.user
-    current_user_id = request.user.id
-    return render(request, 'detail.html', {'object': object, 'current_user': current_user, 'current_user_id': current_user_id,})
+    return render(request, 'detail.html', {'object': object, 'current_user': current_user})
 
 @login_required
 def update(request, pk):
@@ -81,25 +80,34 @@ def update(request, pk):
         object = get_object_or_404(MinimalModel, pk=pk)
     else:
         object = MinimalModel()
+
+    if object.author.id == request.user.id:
+        if request.method == 'POST':
+            form = ThingUpdateForm(request.POST, request.FILES, instance=object)
+            if form.is_valid():
+                post = form.save(commit=False)
+                post.author = request.user
+                post.save()
+                return redirect('list')
+        else:
+            form = ThingUpdateForm(instance=object)
+
+        return render(request, 'update.html', {'form': form})
     
-    if request.method == 'POST':
-        form = ThingUpdateForm(request.POST, request.FILES, instance=object)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.save()
-            return redirect('list')
     else:
-        form = ThingUpdateForm(instance=object)
-    
-    return render(request, 'update.html', {'form': form})
+        message = '他のアカウントの投稿は編集できません。'
+        return render(request, 'detail.html', {'message': message, 'object': object})
 
 
 @login_required
 def delete(request, pk):
-    post = get_object_or_404(MinimalModel, pk=pk)
-    post.delete()
-    return redirect('list')
+    object = get_object_or_404(MinimalModel, pk=pk)
+    if object.author.id == request.user.id:
+        object.delete()
+        message = '投稿は削除されました。'
+    else:
+        message = '他のアカウントの投稿は削除できません。'
+    return render(request, 'detail.html', {'message': message, 'object': object})
 
 # 以下、ユーザーに関するview
 def signup(request):
@@ -119,7 +127,10 @@ def signup(request):
 @login_required
 def user_detail(request, pk):
     user = get_object_or_404(CustomUser, pk=pk)
-    return render(request, 'user_detail.html', {'user': user})
+    if user.id == request.user.id:
+        return render(request, 'user_detail.html', {'user': user})
+    else:
+        return redirect('home')
 
 @login_required
 def user_update(request, pk):
@@ -128,29 +139,31 @@ def user_update(request, pk):
     else:
         user = CustomUser()
 
-    initial_data = {
-        'username': user.username,
-        'last_name': user.last_name, 
-        'first_name': user.first_name, 
-        'email': user.email,
-        'password': '',
-    }
+    if user.id == request.user.id:
+        initial_data = {
+            'username': user.username,
+            'last_name': user.last_name, 
+            'first_name': user.first_name, 
+            'email': user.email,
+            'password': '',
+        }
+        if request.method == 'POST':
+            form = UserUpdateForm(request.POST, request.FILES, instance=user)
+            if form.is_valid():
+                user = form.save(commit=False)
+                username = form.cleaned_data['username']
+                password = form.cleaned_data['password']
+                user.set_password(password)
+                user.save()
+                user = authenticate(username=username, password=password)
+                login(request, user)
+                return redirect('list')
+        else:
+            form = UserUpdateForm(initial=initial_data, instance=user)    
+        return render(request, 'user_update.html', {'form': form, 'user': user})
 
-    if request.method == 'POST':
-        form = UserUpdateForm(request.POST, request.FILES, instance=user)
-        if form.is_valid():
-            user = form.save(commit=False)
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user.set_password(password)
-            user.save()
-            user = authenticate(username=username, password=password)
-            login(request, user)
-            return redirect('list')
     else:
-        form = UserUpdateForm(initial=initial_data, instance=user)
-    
-    return render(request, 'user_update.html', {'form': form, 'user': user})
+        return redirect('home')
     
 # ユーザー投稿ページに必要なデータを取ってくる関数
 def user_posts_base(pk):

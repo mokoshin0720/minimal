@@ -1,12 +1,7 @@
 {% extends 'base.html' %}
 
-{% block header %}
-<div class="alert alert-primary" role="alert">
-  <h3>詳細ページ</h3>
-</div>
-{% endblock header %}
-
 {% block content %}
+{{ message }}
 <div class="container">
     <div class="alert alert-success" role="alert">
       <p>タイトル： {{ object.title }}</p>

@@ -29,18 +29,21 @@
             <li><a href="{% url 'index' %}" class="nav-link px-2 text-white">wellcome</a></li>
             <li><a href="#" class="nav-link px-2 text-white">機能紹介</a></li>
             <li><a href="{% url 'list' %}" class="nav-link px-2 text-white">投稿一覧</a></li>
+            {% if request.user.is_authenticated %}
+            <li><a href="{% url 'create' %}" class="nav-link px-2 text-white">投稿作成</a></li>
+            {% endif %}
           </ul>
 
-      {% if user.is_authenticated %}
-      <p>{{ user }}</p>
+      {% if request.user.is_authenticated %}
+      <p>{{ request.user }}</p>
           <div class="dropdown text-end">
             <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="{{ user.image.url }}" alt="mdo" width="32" height="32" class="rounded-circle">
+            <img src="{{ request.user.image.url }}" alt="mdo" width="32" height="32" class="rounded-circle">
             </a>
 
             <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-              <li><a class="dropdown-item" href="{% url 'user_posts' user.id %}">自分の投稿</a></li>
-              <li><a class="dropdown-item" href="{% url 'user_detail' user.id %}">ユーザー情報</a></li>
+              <li><a class="dropdown-item" href="{% url 'user_posts' request.user.id %}">自分の投稿</a></li>
+              <li><a class="dropdown-item" href="{% url 'user_detail' request.user.id %}">ユーザー情報</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="{% url 'logout' %}">ログアウト</a></li>
             </ul>
