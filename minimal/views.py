@@ -68,7 +68,6 @@ def create(request):
         form = ThingForm
     return render(request, 'create.html', {'form': form})
 
-@login_required
 def detail(request, pk):
     object = get_object_or_404(MinimalModel, pk=pk)
     current_user = request.user
@@ -172,23 +171,32 @@ def user_posts_base(pk):
     satisfied_list = MinimalModel.objects.filter(author=user, status__name='満足')
     planed_list = MinimalModel.objects.filter(author=user, status__name='手放すかも')
     threw_list = MinimalModel.objects.filter(author=user, status__name='手放した')
-    return user, object_list, satisfied_list, planed_list, threw_list
+
+    context = {
+        'user': user,
+        'object_list': object_list,
+        'satisfied_list': satisfied_list,
+        'planed_list': planed_list,
+        'threw_list': threw_list,
+    }
+
+    return context
 
 def user_posts(request, pk):
-    user, object_list, satisfied_list, planed_list, threw_list = user_posts_base(pk)
-    return render(request, 'user_posts.html', {'user':user, 'object_list': object_list, 'satisfied_list': satisfied_list, 'planed_list': planed_list, 'threw_list': threw_list})
+    context = user_posts_base(pk)
+    return render(request, 'user_posts.html', context)
 
 def user_posts_satisfied(request, pk):
-    user, _, satisfied_list, _, _ = user_posts_base(pk)
-    return render(request, 'user_posts_satisfied.html', {'user':user, 'satisfied_list': satisfied_list})
+    context = user_posts_base(pk)
+    return render(request, 'user_posts_satisfied.html', context)
 
 def user_posts_planed(request, pk):
-    user, _, _, planed_list, _ = user_posts_base(pk)
-    return render(request, 'user_posts_planed.html', {'user':user, 'planed_list': planed_list})
+    context = user_posts_base(pk)
+    return render(request, 'user_posts_planed.html', context)
 
 def user_posts_threw(request, pk):
-    user, _, _, _, threw_list = user_posts_base(pk)
-    return render(request, 'user_posts_threw.html', {'user':user, 'threw_list': threw_list})
+    context = user_posts_base(pk)
+    return render(request, 'user_posts_threw.html', context)
 
 # 自作server_error
 @requires_csrf_token

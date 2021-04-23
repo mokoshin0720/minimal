@@ -1,19 +1,47 @@
 {% extends 'base.html' %}
 
 {% block header %}
-<div class="alert alert-primary" role="alert">
-  <h3><a href="{% url 'user_posts' user.id %}">{{ user.username }}</a>の投稿</h3>
-  <p>満足： {{ satisfied_list.count }}個</p>
-</div>
+  <section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light"><a href="{% url 'user_posts' user.id %}">{{ user.username }}</a>の投稿</h1>
+        <p class="lead text-muted">いくら購入したのか、いくら手放したのかを記載</p>
+        <p>
+          <a href="{% url 'user_posts_satisfied' user.id %}" class="btn btn-primary my-2">満足：{{ satisfied_list.count }}個</a>
+          <a href="{% url 'user_posts_planed' user.id %}" class="btn btn-primary my-2">手放し予定：{{ planed_list.count }}個</a>
+          <a href="{% url 'user_posts_threw' user.id %}" class="btn btn-primary my-2">手放した：{{ threw_list.count }}個</a>
+        </p>
+      </div>
+    </div>
+  </section>
 {% endblock header %}
 
 {% block content %}
-<div class="container">
+  <div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
     {% for satisfied_obj in satisfied_list %}
-        <div class="alert alert-success" role="alert">
-            <p>タイトル：<a href="{% url 'detail' satisfied_obj.pk %}"> {{ satisfied_obj.title }}</a></p>
-            <p>投稿者： {{ satisfied_obj.author }}</p>
+    <div class="col">
+          <div class="card shadow-sm">
+            <img class="bd-placeholder-img card-img-top" width="100%" height="100%" src="{{ satisfied_obj.obj_image.url }}">
+            <div class="card-body">
+            <a href="{% url 'user_posts' satisfied_obj.author.id %}">@{{ satisfied_obj.author }}</a>
+            
+              <p class="card-text">{{ satisfied_obj.buy_reason }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+              <div class="like-outer">
+                    {% include 'like.html' %}
+              </div>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-secondary"><a href="{% url 'detail' satisfied_obj.pk %}">詳細</a></button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                </div>
+                <small class="text-muted">{{ satisfied_obj.buy_date }}</small>
+              </div>
+            </div>
+          </div>
         </div>
     {% endfor %}
-</div> 
+    </div>
+
 {% endblock content %}
