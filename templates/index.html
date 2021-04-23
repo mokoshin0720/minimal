@@ -1,17 +1,61 @@
 {% extends 'base.html' %}
-{% load static %}
 
-{% block customcss %}
-    <link href="{% static 'header.css' %}" rel="stylesheet">
-{% endblock customcss %}
+{% block header %}
+  <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light" style="background-image: url(https://free-paper-texture.com/p/p0526/p0526_l.jpg) ; background-size: cover;">
+    <div class="col-md-5 p-lg-5 mx-auto my-5">
+      <h1 class="display-4 fw-normal">Punny headline</h1>
+      <p class="lead fw-normal">And an even wittier subheading to boot. Jumpstart your marketing efforts with this example based on Apple’s marketing pages.</p>
+      <a class="btn btn-outline-secondary" href="#">テストユーザーとしてログイン</a>
+    </div>
+    <div class="product-device shadow-sm d-none d-md-block"></div>
+    <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+  </div>
+{% endblock header %}
 
 {% block content %}
-    <h1>トップ画面</h1>
- 
-    {% if user.is_authenticated %}
-    <p><a href="{% url 'logout' %}">ログアウト</a></p>
-    {% else %}
-    <p><a href="{% url 'login' %}">ログイン</a></p>
-    {% endif %}
+<div class="container py-5" id="hanging-icons">
+  <h2 class="pb-2 border-bottom">Hanging icons</h2>
+  <div class="row g-5 py-5">
+    <div class="col-md-4 d-flex align-items-start">
+      <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
+        <svg class="bi" width="1em" height="1em"><use xlink:href="#toggles2"/></svg>
+      </div>
+      <div>
+        <h2>Featured title</h2>
+        <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+        <a href="#" class="btn btn-primary">
+          Primary button
+        </a>
+      </div>
+    </div>
+    <div class="col-md-4 d-flex align-items-start">
+      <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
+        <svg class="bi" width="1em" height="1em"><use xlink:href="#cpu-fill"/></svg>
+      </div>
+      <div>
+        <h2>Featured title</h2>
+        <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+        <a href="#" class="btn btn-primary">
+          Primary button
+        </a>
+      </div>
+    </div>
+    <div class="col-md-4 d-flex align-items-start">
+      <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
+        <svg class="bi" width="1em" height="1em"><use xlink:href="#tools"/></svg>
+      </div>
+      <div>
+        <h2>Featured title</h2>
+        <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
+        <a href="#" class="btn btn-primary">
+          Primary button
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
  
 {% endblock %}
