@@ -174,8 +174,25 @@ def user_posts_base(pk):
     user = get_object_or_404(CustomUser, pk=pk)
     object_list = MinimalModel.objects.filter(author=user)
     satisfied_list = MinimalModel.objects.filter(author=user, status__name='満足')
-    planed_list = MinimalModel.objects.filter(author=user, status__name='手放すかも')
+    planed_list = MinimalModel.objects.filter(author=user, status__name='手放し予定')
     threw_list = MinimalModel.objects.filter(author=user, status__name='手放した')
+
+    buy_price_sum = 0
+    planed_price_sum = 0
+    sell_price_sum = 0
+
+    for i in satisfied_list:
+        buy_price_sum += i.buy_price
+
+    for i in planed_list:
+        planed_price_sum += i.buy_price
+    
+    for i in threw_list:
+        sell_price_sum += i.sell_price
+
+    buy_price_sum = "{:,}".format(buy_price_sum)
+    planed_price_sum = "{:,}".format(planed_price_sum)
+    sell_price_sum = "{:,}".format(sell_price_sum)
 
     context = {
         'user': user,
@@ -183,6 +200,9 @@ def user_posts_base(pk):
         'satisfied_list': satisfied_list,
         'planed_list': planed_list,
         'threw_list': threw_list,
+        'buy_price_sum': buy_price_sum,
+        'planed_price_sum': planed_price_sum,
+        'sell_price_sum': sell_price_sum,
     }
 
     return context
