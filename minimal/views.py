@@ -123,6 +123,11 @@ def signup(request):
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
 
+def guest_login(request):
+    guest_user = CustomUser.objects.get(username='ゲスト')
+    login(request, guest_user)
+    return redirect('index')
+
 @login_required
 def user_detail(request, pk):
     user = get_object_or_404(CustomUser, pk=pk)
