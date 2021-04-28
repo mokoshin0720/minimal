@@ -7,9 +7,9 @@
         <h1 class="fw-light">みんなの投稿</h1>
         <p class="lead text-muted">買ったもの、捨てたもの、悩んでいるものを全て記録してみよう！</p>
         <p>
-          <a href="#" class="btn btn-primary my-2">購入したもの</a>
-          <a href="#" class="btn btn-primary my-2">手放すか悩んでいるもの</a>
-          <a href="#" class="btn btn-primary my-2">手放したもの</a>
+          <a href="{% url 'list_satisfied' %}" class="btn btn-primary my-2">購入したもの</a>
+          <a href="{% url 'list_planed' %}" class="btn btn-primary my-2">手放すか悩んでいるもの</a>
+          <a href="{% url 'list_threw' %}" class="btn btn-primary my-2">手放したもの</a>
         </p>
       </div>
     </div>

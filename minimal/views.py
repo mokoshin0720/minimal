@@ -14,19 +14,53 @@ def home(request):
     user = request.user
     return render(request, 'home.html', {'user':user})
 
+def like_list(request, objects):
+    liked_list = []
+    for object in objects:
+        liked = object.like_set.filter(user=request.user)
+        if liked.exists():
+            liked_list.append(object.id)
+    context = {
+        'objects': objects,
+        'liked_list': liked_list,
+    }
+    return context
+
 def list(request):
     objects = MinimalModel.objects.all()
 
     if request.user.is_authenticated:
-        liked_list = []
-        for object in objects:
-            liked = object.like_set.filter(user=request.user)
-            if liked.exists():
-                liked_list.append(object.id)
-        context = {
-            'objects': objects,
-            'liked_list': liked_list,
-        }
+        context = like_list(request, objects)
+        return render(request, 'list.html', context)
+
+    else:
+        return render(request, 'list.html', {'objects': objects})
+
+def list_satisfied(request):
+    objects = MinimalModel.objects.filter(status__name='満足')
+
+    if request.user.is_authenticated:
+        context = like_list(request, objects)
+        return render(request, 'list.html', context)
+
+    else:
+        return render(request, 'list.html', {'objects': objects})
+
+def list_planed(request):
+    objects = MinimalModel.objects.filter(status__name='手放し予定')
+
+    if request.user.is_authenticated:
+        context = like_list(request, objects)
+        return render(request, 'list.html', context)
+
+    else:
+        return render(request, 'list.html', {'objects': objects})
+
+def list_threw(request):
+    objects = MinimalModel.objects.filter(status__name='手放した')
+
+    if request.user.is_authenticated:
+        context = like_list(request, objects)
         return render(request, 'list.html', context)
 
     else:
