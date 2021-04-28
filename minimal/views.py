@@ -83,6 +83,7 @@ def update(request, pk):
     if object.author.id == request.user.id:
         if request.method == 'POST':
             form = ThingUpdateForm(request.POST, request.FILES, instance=object)
+
             if form.is_valid():
                 post = form.save(commit=False)
                 post.author = request.user
@@ -182,13 +183,13 @@ def user_posts_base(pk):
     sell_price_sum = 0
 
     for i in satisfied_list:
-        buy_price_sum += i.buy_price
+        if i.buy_price is not None: buy_price_sum += i.buy_price
 
     for i in planed_list:
-        planed_price_sum += i.buy_price
+        if i.buy_price is not None: planed_price_sum += i.buy_price
     
     for i in threw_list:
-        sell_price_sum += i.sell_price
+        if i.sell_price is not None: sell_price_sum += i.sell_price
 
     buy_price_sum = "{:,}".format(buy_price_sum)
     planed_price_sum = "{:,}".format(planed_price_sum)
