@@ -14,7 +14,7 @@ class ThingStatus(models.Model):
         return self.name
 
 class MinimalModel(models.Model):
-    title = models.CharField(max_length=100, verbose_name='品物名')
+    title = models.CharField(max_length=20, verbose_name='品物名')
     author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, verbose_name='購入者')
     buy_reason = models.TextField(verbose_name='購入した理由')
     sell_reason = models.TextField(null=True, blank=True, verbose_name='手放す理由')

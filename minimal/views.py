@@ -169,7 +169,7 @@ def user_detail(request, pk):
     if user.id == request.user.id:
         return render(request, 'user_detail.html', {'user': user})
     else:
-        return redirect('home')
+        return redirect('index')
 
 @login_required
 def user_update(request, pk):
@@ -202,7 +202,7 @@ def user_update(request, pk):
         return render(request, 'user_update.html', {'form': form, 'user': user})
 
     else:
-        return redirect('home')
+        return redirect('index')
     
 # ユーザー投稿ページに必要なデータを取ってくる関数
 def user_posts_base(pk):

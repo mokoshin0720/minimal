@@ -23,18 +23,19 @@
     {% for object in object_list %}
     <div class="col">
           <div class="card shadow-sm">
+          <small class="text-muted">@{{ object.author }}</small>
+          <p>{{ object }}</p>
             <img class="bd-placeholder-img card-img-top" width="100%" height="100%" src="{{ object.obj_image.url }}">
             <div class="card-body">
-            <a href="{% url 'user_posts' object.author.id %}">@{{ object.author }}</a>
-            
+              <p class="text-muted">状態：{{ object.status }}</p>
               <p class="card-text">{{ object.buy_reason }}</p>
               <div class="d-flex justify-content-between align-items-center">
               <div class="like-outer">
                     {% include 'like.html' %}
-              </div>
+              </div> 
                 <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary"><a href="{% url 'detail' object.pk %}">詳細</a></button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary" onclick="location.href='{% url 'user_posts' object.author.id %}'">投稿者</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary" onclick="location.href='{% url 'detail' object.pk %}'">詳細</button>
                 </div>
                 <small class="text-muted">{{ object.buy_date }}</small>
               </div>

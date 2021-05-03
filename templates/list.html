@@ -23,18 +23,21 @@
     {% for object in objects %}
     <div class="col">
           <div class="card shadow-sm">
+          <small class="text-muted">@{{ object.author }}</small>
+          <p>{{ object }}</p>
             <img class="bd-placeholder-img card-img-top" width="100%" height="100%" src="{{ object.obj_image.url }}">
             <div class="card-body">
-            <a href="{% url 'user_posts' object.author.id %}">@{{ object.author }}</a>
-            
+            {% if request.path == "/list/" %}
+              <p class="text-muted">状態：{{ object.status }}</p>
+            {% endif %}
               <p class="card-text">{{ object.buy_reason }}</p>
               <div class="d-flex justify-content-between align-items-center">
               <div class="like-outer">
                     {% include 'like.html' %}
-              </div>
+              </div> 
                 <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary"><a href="{% url 'detail' object.pk %}">詳細</a></button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary" onclick="location.href='{% url 'user_posts' object.author.id %}'">投稿者</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary" onclick="location.href='{% url 'detail' object.pk %}'">詳細</button>
                 </div>
                 <small class="text-muted">{{ object.buy_date }}</small>
               </div>
@@ -44,9 +47,9 @@
     {% endfor %}
     </div>
 
-{% if user.is_authenticated %}
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <script type="text/javascript">
+{% if user.is_authenticated %}
     $(document).ready(function(event){
         $(document).on('click', '#like', function(event){
             event.preventDefault();
@@ -71,6 +74,14 @@
             });
         });
     });
-</script>
 {% endif %}
+
+    $(".card-text").each(function(){
+    var txt = $(this).text();
+    if(txt.length > 30){
+        txt = txt.substr(0, 30);
+        $(this).text(txt + "･･･");
+    }
+});
+</script>
 {% endblock content %}
