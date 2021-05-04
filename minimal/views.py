@@ -8,7 +8,6 @@ from django.views.decorators.csrf import requires_csrf_token
 
 def index(request):
     return render(request, 'index.html')
-
 @login_required
 def home(request):
     user = request.user
@@ -122,7 +121,7 @@ def update(request, pk):
                 post = form.save(commit=False)
                 post.author = request.user
                 post.save()
-                return redirect('list')
+                return redirect('detail', pk=pk)
         else:
             form = ThingUpdateForm(instance=object)
 
@@ -196,7 +195,7 @@ def user_update(request, pk):
                 user.save()
                 user = authenticate(username=username, password=password)
                 login(request, user)
-                return redirect('list')
+                return redirect('user_detail', pk=pk)
         else:
             form = UserUpdateForm(initial=initial_data, instance=user)    
         return render(request, 'user_update.html', {'form': form, 'user': user})
@@ -245,18 +244,6 @@ def user_posts_base(pk):
 def user_posts(request, pk):
     context = user_posts_base(pk)
     return render(request, 'user_posts.html', context)
-
-def user_posts_satisfied(request, pk):
-    context = user_posts_base(pk)
-    return render(request, 'user_posts_satisfied.html', context)
-
-def user_posts_planed(request, pk):
-    context = user_posts_base(pk)
-    return render(request, 'user_posts_planed.html', context)
-
-def user_posts_threw(request, pk):
-    context = user_posts_base(pk)
-    return render(request, 'user_posts_threw.html', context)
 
 # 自作server_error
 @requires_csrf_token

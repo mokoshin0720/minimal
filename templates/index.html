@@ -54,7 +54,7 @@
         <h2>手放した後もサポート</h2>
         <p>個人で物を売るのが当たり前の時代。物のリセールバリューを知れる。</p>
         {% if request.user.is_authenticated == True %}
-        <a href="{% url 'list' %}" class="btn btn-primary">
+        <a href="{% url 'list_threw' %}" class="btn btn-primary">
           みんなの売却投稿を見る
         </a>
         {% endif %}
