@@ -12,6 +12,9 @@ services:
         build: .
         volumes:
             - .:/development/minimalist
+            - /etc/localtime:/etc/localtime:ro
+        environment:
+            TZ: Asia/Tokyo
         ports:
             - '8000:8000'
         depends_on:
