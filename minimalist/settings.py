@@ -130,11 +130,13 @@ try:
 except ImportError:
     pass
 
+print(os.getenv('SECRET_KEY'))
+
 if not DEBUG:
     BASE_DIR = environ.Path(__file__) - 2
     env = environ.Env()
     READ_DOT_ENV_FILE = env.bool('DJANGO_READ_DOT_ENV_FILE', default=False)
-    
+
     if READ_DOT_ENV_FILE:
         env_file = str(BASE_DIR.path('.env'))
         env.read_env(env_file)
