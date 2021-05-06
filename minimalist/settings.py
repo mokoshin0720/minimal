@@ -131,6 +131,7 @@ except ImportError:
     pass
 
 print(os.getenv('SECRET_KEY'))
+print(os.getenv('TZ'))
 
 if not DEBUG:
     BASE_DIR = environ.Path(__file__) - 2

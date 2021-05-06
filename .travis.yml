@@ -3,8 +3,7 @@ sudo: required
 services: docker
 
 before_install:
-  - docker-compose up --build-arg SECRET_KEY=$SECRET_KEY -d
+  - docker-compose up --build -d
 
 script:
-  - export SECRET_KEY='test'
-  - docker-compose exec web python manage.py test
+  - docker-compose exec -e SECRET_KEY=$SECRET_KEY web python manage.py test
