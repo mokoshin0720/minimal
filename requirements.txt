@@ -7,3 +7,4 @@ dj-database-url
 django-storages
 boto3
 whitenoise
+django-environ
