@@ -6,4 +6,5 @@ before_install:
   - docker-compose up --build -d
 
 script:
+  - export SECRET_KEY='test'
   - docker-compose exec web python manage.py test
