@@ -130,14 +130,7 @@ except ImportError:
     pass
 
 if not DEBUG:
-    import environ
-    env = environ.Env()
-    READ_ENV_FILE = env.bool('DJANGO_READ_ENV_FILE', default=False)
-    if READ_ENV_FILE:
-        env_file = str(BASE_DIR.path('.env'))
-        env.read_env(env_file)
-
-    SECRET_KEY = env('SECRET_KEY')
+    SECRET_KEY = os.environ['SECRET_KEY']
 
     AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
     AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
