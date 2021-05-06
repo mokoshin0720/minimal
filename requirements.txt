@@ -1,0 +1,9 @@
+Django == 3.1
+psycopg2
+Pillow
+gunicorn
+django-heroku
+dj-database-url
+django-storages
+boto3
+whitenoise

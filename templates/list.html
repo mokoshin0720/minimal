@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+      {% if request.path == "/list/" %}
+        <h1 class="fw-light">みんなの投稿</h1>
+      {% elif request.path == "/list_satisfied/" %}
+        <h1 class="fw-light">みんなが購入した物</h1>
+      {% elif request.path == "/list_planed/" %}
+        <h1 class="fw-light">みんなが悩み中の物</h1>
+      {% elif request.path == "/list_threw/" %}
+        <h1 class="fw-light">みんなが手放した物</h1>
+      {% endif %}
+        <p class="lead text-muted">買ったもの、捨てたもの、悩んでいるものを全て記録してみよう！</p>
+        <p>
+          <a href="{% url 'list_satisfied' %}" class="btn btn-primary my-2">購入したもの</a>
+          <a href="{% url 'list_planed' %}" class="btn btn-primary my-2">手放すか悩んでいるもの</a>
+          <a href="{% url 'list_threw' %}" class="btn btn-primary my-2">手放したもの</a>
+        </p>
+      </div>
+    </div>
+  </section>
+{% endblock header %}
+
+{% block content %}
+  <div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    {% for object in objects %}
+    <div class="col">
+          <div class="card shadow-sm">
+          <small class="text-muted">@{{ object.author }}</small>
+          <p>{{ object }}</p>
+            <img class="bd-placeholder-img card-img-top" width="100%" height="100%" src="{{ object.obj_image.url }}">
+            <div class="card-body">
+            {% if request.path == "/list/" %}
+              <p class="text-muted">状態：{{ object.status }}</p>
+            {% endif %}
+
+                購入理由：<p class="card-text">{{ object.buy_reason }}</p>
+            {% if object.status.id == 1 %} {% comment %} 状態＝手放したの時 {% endcomment %}
+                {% if object.sell_reason is None %}
+                売却理由：<p class="card-text"></p>
+                {% else %}
+                売却理由：<p class="card-text">{{ object.sell_reason }}</p>
+                {% endif %}
+            {% endif %}
+
+              <div class="d-flex justify-content-between align-items-center">
+              <div class="like-outer">
+                    {% include 'like.html' %}
+              </div> 
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-secondary" onclick="location.href='{% url 'user_posts' object.author.id %}'">投稿者</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary" onclick="location.href='{% url 'detail' object.pk %}'">詳細</button>
+                </div>
+                <small class="text-muted">{{ object.buy_date }}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+    {% endfor %}
+    </div>
+
+<script type="text/javascript">
+{% if user.is_authenticated %}
+    $(document).ready(function(event){
+        $(document).on('click', '#like', function(event){
+            event.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'like' %}",
+                data: {
+                    'object_id': $(this).attr('name'),
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                dataType: 'json',
+                success: function(response){
+                    selector = document.getElementsByName(response.object_id);
+                    if(response.liked){
+                        $(selector).html("<i class='fas fa-lg fa-heart'></i>");
+                    }
+                    else {
+                        $(selector).html("<i class='far fa-lg fa-heart'></i>");
+                    }
+                    selector2 = document.getElementsByName(response.object_id + "-count");
+                    $(selector2).text(response.count);
+                }
+            });
+        });
+    });
+{% endif %}
+
+    $(".card-text").each(function(){
+    var txt = $(this).text();
+    if(txt.length > 30){
+        txt = txt.substr(0, 30);
+        $(this).text(txt + "･･･");
+    }
+});
+</script>
+{% endblock content %}

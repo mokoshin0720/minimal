@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light"><a href="{% url 'user_posts' user.id %}">{{ user.username }}</a>が悩んでいる物</h1>
+        <p class="lead text-muted">合計¥{{ planed_price_sum }}手放す予定</p>
+        <p>
+          <a href="{% url 'user_posts_satisfied' user.id %}" class="btn btn-primary my-2">満足：{{ satisfied_list.count }}個</a>
+          <a href="{% url 'user_posts_planed' user.id %}" class="btn btn-primary my-2">手放し予定：{{ planed_list.count }}個</a>
+          <a href="{% url 'user_posts_threw' user.id %}" class="btn btn-primary my-2">手放した：{{ threw_list.count }}個</a>
+        </p>
+      </div>
+    </div>
+  </section>
+{% endblock header %}
+
+{% block content %}
+  <div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    {% for planed_obj in planed_list %}
+    <div class="col">
+          <div class="card shadow-sm">
+            <img class="bd-placeholder-img card-img-top" width="100%" height="100%" src="{{ planed_obj.obj_image.url }}">
+            <div class="card-body">
+            <a href="{% url 'user_posts' planed_obj.author.id %}">@{{ planed_obj.author }}</a>
+            
+              <p class="card-text">{{ planed_obj.buy_reason }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+              <div class="like-outer">
+                    {% include 'like.html' %}
+              </div>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-sm btn-outline-secondary"><a href="{% url 'detail' planed_obj.pk %}">詳細</a></button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                </div>
+                <small class="text-muted">{{ planed_obj.buy_date }}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+    {% endfor %}
+    </div>
+
+{% endblock content %}
