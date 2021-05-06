@@ -14,6 +14,7 @@ class ThingModelTests(TestCase):
         MinimalModel.objects.create(title="冷蔵庫",
                                     author=CustomUser.objects.get(username="test"),
                                     status=ThingStatus.objects.get(name="満足"),
+                                    buy_reason="保存するため",
                                     buy_date=timezone.now(),
                                     buy_price=100)
 
