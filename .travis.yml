@@ -1,9 +1,9 @@
 sudo: required
-
 services: docker
-
 before_install:
-  - docker-compose up --build -d
-
+- docker-compose up --build -d
 script:
-  - docker-compose exec web python manage.py test
+- docker-compose exec web python manage.py test
+env:
+  global:
+    secure: TMpZArFmbf/fSSXzqSFc1HJAYCnVN55Jk+103gL5jNv2ynbHMq9pNsnFdJzD5nrsv4T9YraTfXCv0G3QmkqX7tyRu44Giekc5lR7dlJAEemG9Wp6X5glZk3h5+6VjRmbN9BDA677fibruAVoWKQefhk8uTgJfgCqgdEw3oCPOvwsy+JVAKjGgE6HLv+JC7R5GeiH0XvlolSnG0VUqbwmgS630shHkKufrjoGCaoNFUQgmHo26qPJdEzEvdJEFTEBbpUHH7G37X3792yzpL/gv67NFH10jDI2F3ze7KYWWsnAXJdkNqsoaI6d6NReiE68PJ6yw+O8RU7nS2A86Z1qgbx3vkDZYvjF8WJrzc2yWifAQmCroCV8cj8OEL+iB59Rh4XJN2DovGLhu6wKV7KCYvnifM4hLikpdY28jumz/mMJyppCthBjoFbQWKNtoKQaxpc0RZoK4PRFzUqSVpK+vTYkqy3I8NYxaHT8ydEIJgDcjZpJyXOBpSzv29bmmtvaGQosEzDTbsPFVnRFcb0vgJpMz+vWJk27sRlbvRgD5yUzSfxcLqaLWywiE8MVIGVn7KKy39417zzRkdlYcPITuK08ZmkJk1d2u1vFyG5g6AqaSSnVf1AQSiOLrxZLX3AeoqfN5z9vAjQoqxmgPkdxvmI+amKsyWid6y3Xx1ANREQ=
