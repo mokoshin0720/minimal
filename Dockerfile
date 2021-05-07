@@ -13,4 +13,4 @@ RUN chmod +x /wait
 
 ADD . /development/minimalist
 
-CMD /wait && python manage.py test
+CMD /wait && ls
