@@ -67,11 +67,11 @@ WSGI_APPLICATION = 'minimalist.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'name',
-        'USER': 'user',
-        'PASSWORD': '',
-        'HOST': 'host',
-        'PORT': '',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'db',
+        'PORT': '5432',
     }
 }
 
@@ -125,16 +125,15 @@ LOGIN_REDIRECT_URL = 'home'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-try:
-    from .local_settings import *
-except ImportError:
-    pass
-
-print(os.getenv('SECRET_KEY'))
-print(os.getenv('TZ'))
+# try:
+#     from .local_settings import *
+# except ImportError:
+#     pass
 
 if not DEBUG:
     BASE_DIR = environ.Path(__file__) - 2
+    print(BASE_DIR)
+    print("*"*100)
     env = environ.Env()
     READ_DOT_ENV_FILE = env.bool('DJANGO_READ_DOT_ENV_FILE', default=False)
 
@@ -160,8 +159,12 @@ if not DEBUG:
 
     AWS_S3_FILE_OVERWRITE = False
 
-    import django_heroku
-    django_heroku.settings(locals())
+#     DATABASES = {
+#     'default': env.db() # デフォルトでDATABASE_URLの環境変数を分解してくれる
+# }
 
-db_from_env = dj_database_url.config(conn_max_age=600, ssl_require=True)
-DATABASES['default'].update(db_from_env)
+    # import django_heroku
+    # django_heroku.settings(locals())
+
+# db_from_env = dj_database_url.config(conn_max_age=600, ssl_require=True)
+# DATABASES['default'].update(db_from_env)
