@@ -11,4 +11,4 @@ RUN pip install -r requirements.txt
 ADD . /development/minimalist
 
 COPY . .
-CMD ["python", "./manage.py", "runserver", "0:5000"]
+CMD ["web:", "gunicorn", "minimalist.wsgi"]
