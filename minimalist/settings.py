@@ -125,10 +125,10 @@ LOGIN_REDIRECT_URL = 'home'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# try:
-#     from .local_settings import *
-# except ImportError:
-#     pass
+try:
+    from .local_settings import *
+except ImportError:
+    pass
 
 if not DEBUG:
     BASE_DIR = environ.Path(__file__) - 2
@@ -157,7 +157,9 @@ if not DEBUG:
 
     AWS_S3_FILE_OVERWRITE = False
 
-    import django_heroku
-    django_heroku.settings(locals())
-    db_from_env = dj_database_url.config(conn_max_age=600, ssl_require=True)
-    DATABASES['default'].update(db_from_env)
+    PRODUCTION_ENV = True
+    if PRODUCTION_ENV:
+        import django_heroku
+        django_heroku.settings(locals())
+        db_from_env = dj_database_url.config(conn_max_age=600, ssl_require=True)
+        DATABASES['default'].update(db_from_env)
