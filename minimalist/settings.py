@@ -66,7 +66,7 @@ WSGI_APPLICATION = 'minimalist.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
@@ -132,8 +132,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 if not DEBUG:
     BASE_DIR = environ.Path(__file__) - 2
-    print(BASE_DIR)
-    print("*"*100)
     env = environ.Env()
     READ_DOT_ENV_FILE = env.bool('DJANGO_READ_DOT_ENV_FILE', default=False)
 
@@ -158,10 +156,6 @@ if not DEBUG:
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
     AWS_S3_FILE_OVERWRITE = False
-
-#     DATABASES = {
-#     'default': env.db() # デフォルトでDATABASE_URLの環境変数を分解してくれる
-# }
 
     # import django_heroku
     # django_heroku.settings(locals())
