@@ -1,6 +1,8 @@
 build:
   docker:
     web: Dockerfile.prod
+
+setup:
   config:
     SECRET_KEY: ${SECRET_KEY}
 
