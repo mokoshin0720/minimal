@@ -19,6 +19,9 @@ ENV PYTHONUNBUFFERED 1 \
     S3_BUCKET ${S3_BUCKET} \
     SECRET_KEY ${SECRET_KEY}
 
+RUN echo ${SECRET_KEY}
+RUN echo SECRET_KEY
+
 WORKDIR /development/minimalist
 
 ADD requirements.txt /development/minimalist
