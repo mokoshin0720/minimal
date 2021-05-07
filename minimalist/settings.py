@@ -157,8 +157,8 @@ if not DEBUG:
 
     AWS_S3_FILE_OVERWRITE = False
 
-    PRODUCTION_ENV = True
-    if PRODUCTION_ENV:
+    PRODUCTION = os.getenv('PRODUCTION', default=True)
+    if PRODUCTION:
         import django_heroku
         django_heroku.settings(locals())
         db_from_env = dj_database_url.config(conn_max_age=600, ssl_require=True)
