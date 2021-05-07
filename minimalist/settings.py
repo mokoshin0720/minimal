@@ -157,13 +157,16 @@ if not DEBUG:
 
     AWS_S3_FILE_OVERWRITE = False
 
-    PRODUCTION_ENV = os.getenv('PRODUCTION_ENV', default=True)
+    PRODUCTION_ENV = env.bool('PRODUCTION_ENV', default=True)
     if PRODUCTION_ENV:
+        print("="*30)
+        print("Production environment")
+        print("="*30)
         import django_heroku
         django_heroku.settings(locals())
         db_from_env = dj_database_url.config(conn_max_age=600, ssl_require=True)
         DATABASES['default'].update(db_from_env)
     else:
         print("="*30)
-        print("Test production")
+        print("Test environment")
         print("="*30)
