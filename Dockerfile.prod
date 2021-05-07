@@ -11,4 +11,5 @@ RUN pip install -r requirements.txt
 ADD . /development/minimalist
 
 COPY . .
+RUN python manage.py collectstatic --noinput
 CMD ["web:", "gunicorn", "minimalist.wsgi"]
