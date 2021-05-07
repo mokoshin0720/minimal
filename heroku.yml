@@ -1,5 +1,5 @@
 build:
   docker:
-    web: Dockerfile
+    web: Dockerfile.prod
 run:
   web: gunicorn minimalist.wsgi
