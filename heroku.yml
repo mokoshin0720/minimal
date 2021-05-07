@@ -2,7 +2,7 @@ build:
   docker:
     web: Dockerfile.prod
   config:
-    SECRET_KEY: $SECRET_KEY
+    SECRET_KEY: ${SECRET_KEY}
 
 run:
   web: gunicorn minimalist.wsgi
