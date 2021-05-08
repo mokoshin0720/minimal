@@ -1,6 +1,9 @@
 build:
   docker:
     web: Dockerfile.prod
+  config:
+    RAILS_ENV: development
+    REPO: 'www.example.org'
 
 run:
   web: gunicorn minimalist.wsgi
