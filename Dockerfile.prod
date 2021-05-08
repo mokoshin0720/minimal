@@ -9,6 +9,9 @@ RUN echo $RAILS_ENV
 ARG AWS
 RUN echo $AWS
 
+ARG TRAVIS
+RUN echo ${TRAVIS}
+
 ARG AWS2
 RUN echo $AWS2
 
