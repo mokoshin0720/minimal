@@ -1,6 +1,14 @@
+# setup:
+#   config:
+#     AWS: <%= ENV["AWS_ACCESS_KEY_ID"] %>
+#     AWS2: ${AWS_SECRET_ACCESS_KEY}
+
 build:
   docker:
     web: Dockerfile.prod
+  # config:
+  #   RAILS_ENV: development
+  #   REPO: 'www.example.org'
 
 run:
   web: gunicorn minimalist.wsgi

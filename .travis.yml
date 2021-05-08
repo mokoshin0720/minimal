@@ -16,6 +16,7 @@ deploy:
   script:
     docker build -t registry.heroku.com/$HEROKU_APP_NAME/web --build-arg SECRET_KEY="$SECRET_KEY" --build-arg AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID" --build-arg AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY" --build-arg AWS_STORAGE_BUCKET_NAME="$AWS_STORAGE_BUCKET_NAME" -f Dockerfile.prod .;
     docker push registry.heroku.com/$HEROKU_APP_NAME/web;
+    heroku config -a $HEROKU_APP_NAME;
     heroku run --app $HEROKU_APP_NAME python manage.py collectstatic --noinput;
     heroku run --app $HEROKU_APP_NAME python manage.py migrate;
   on:
