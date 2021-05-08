@@ -9,6 +9,9 @@ RUN echo $RAILS_ENV
 ARG AWS
 RUN echo $AWS
 
+ARG AWS2
+RUN echo $AWS2
+
 RUN set
 
 WORKDIR /development/minimalist

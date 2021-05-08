@@ -9,6 +9,7 @@ build:
     RAILS_ENV: development
     REPO: 'www.example.org'
     AWS: <%= ENV["AWS_ACCESS_KEY_ID"] %>
+    AWS2: ${AWS_SECRET_ACCESS_KEY}
 
 run:
   web: gunicorn minimalist.wsgi
