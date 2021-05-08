@@ -14,9 +14,8 @@ script:
 deploy:
   provider: script
   script:
-    docker build -t registry.heroku.com/$HEROKU_APP_NAME/web --build-arg REPO='www.example.org' --build-arg TRAVIS="nice" -f Dockerfile.prod .;
-    # docker push registry.heroku.com/$HEROKU_APP_NAME/web; test
-    heroku container:push;
-    heroku run --app $HEROKU_APP_NAME python manage.py migrate;
+    docker build -t registry.heroku.com/$HEROKU_APP_NAME/web --build-arg REPO='www.example.org' --build-arg TRAVIS="nice" --build-arg SECRET_KEY=$SECRET_KEY -f Dockerfile.prod .;
+    docker push registry.heroku.com/$HEROKU_APP_NAME/web;
+    heroku run --app $HEROKU_APP_NAME python manage.py migrate
   on:
     branch: main
