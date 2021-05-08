@@ -8,7 +8,7 @@ build:
     web: Dockerfile.prod
   config:
     RAILS_ENV: development
-    test: $test
+    TEST: $TEST
 
 run:
   web: gunicorn minimalist.wsgi
