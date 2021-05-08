@@ -4,6 +4,7 @@ ARG test
 
 ENV TEST=$test
 RUN echo TEST
+RUN echo $TEST
 
 ENV TEST=${test}
 RUN echo TEST
