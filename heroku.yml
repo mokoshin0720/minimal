@@ -1,3 +1,7 @@
+setup:
+  config:
+    DJANGO_ENV: perfect
+
 build:
   docker:
     web: Dockerfile.prod
