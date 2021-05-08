@@ -22,5 +22,7 @@ RUN pip install -r requirements.txt
 
 ADD . /development/minimalist
 
+RUN ls
+
 COPY . .
 CMD ["web:", "gunicorn", "minimalist.wsgi"]
