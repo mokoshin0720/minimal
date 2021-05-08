@@ -14,7 +14,7 @@ script:
 deploy:
   provider: script
   script:
-    docker build -t registry.heroku.com/$HEROKU_APP_NAME/web --build-arg REPO='www.example.org' TRAVIS="nice" -f Dockerfile.prod .;
+    docker build -t registry.heroku.com/$HEROKU_APP_NAME/web --build-arg REPO='www.example.org' --build-arg TRAVIS="nice" -f Dockerfile.prod .;
     docker push registry.heroku.com/$HEROKU_APP_NAME/web;
     heroku run --app $HEROKU_APP_NAME python manage.py migrate
   on:
