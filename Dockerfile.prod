@@ -1,12 +1,7 @@
 FROM python:3
 
-ARG my_app_version
-ENV VERSION_APP=$my_app_version
-
-# 環境変数がechoで呼び出されるかのテスト
-RUN echo $HOME
-RUN echo ${VERSION_APP}
-RUN echo ${my_app_version}
+ARG REPO="www.example.com"
+RUN echo $REPO
 
 RUN set
 
