@@ -24,5 +24,7 @@ ADD . /development/minimalist
 
 RUN ls
 
+RUN python manage.py collectstatic --noinput
+
 COPY . .
 CMD ["web:", "gunicorn", "minimalist.wsgi"]
