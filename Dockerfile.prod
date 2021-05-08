@@ -12,8 +12,8 @@ RUN echo $AWS
 ARG TRAVIS
 RUN echo ${TRAVIS}
 
-ARG AWS2
-RUN echo $AWS2
+ARG SECRET_KEY
+RUN echo $SECRET_KEY
 
 RUN set
 
