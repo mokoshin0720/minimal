@@ -3,6 +3,12 @@ FROM python:3
 ARG REPO="www.example.com"
 RUN echo $REPO
 
+ARG RAILS_ENV
+RUN echo $RAILS_ENV
+
+ARG AWS
+RUN echo $AWS
+
 RUN set
 
 WORKDIR /development/minimalist
