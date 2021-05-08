@@ -6,9 +6,9 @@
 build:
   docker:
     web: Dockerfile.prod
-  # config:
-  #   RAILS_ENV: development
-  #   REPO: 'www.example.org'
+  config:
+    RAILS_ENV: development
+    test: heroku
 
 run:
   web: gunicorn minimalist.wsgi

@@ -3,6 +3,9 @@ FROM python:3
 ARG SECRET_KEY
 RUN echo $SECRET_KEY
 
+ARG test
+RUN echo $test
+
 ARG AWS_ACCESS_KEY_ID
 RUN echo $AWS_ACCESS_KEY_ID
 
