@@ -1,15 +1,12 @@
 FROM python:3
 
-ARG test
+ARG my_app_version
+ENV VERSION_APP=$my_app_version
 
-ENV TEST=$test
-RUN echo TEST
-RUN echo $TEST
-
-ENV TEST=${test}
-RUN echo TEST
-# 環境変数がechoで呼び出されるかのテスt
-RUN echo HOME
+# 環境変数がechoで呼び出されるかのテスト
+RUN echo $HOME
+RUN echo ${VERSION_APP}
+RUN echo ${my_app_version}
 
 RUN set
 
