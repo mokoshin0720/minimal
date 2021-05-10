@@ -113,11 +113,6 @@ def create(request):
         form = ThingForm
     return render(request, 'create.html', {'form': form})
 
-def detail(request, pk):
-    object = get_object_or_404(MinimalModel, pk=pk)
-    current_user = request.user
-    return render(request, 'detail.html', {'object': object, 'current_user': current_user})
-
 @login_required
 def update(request, pk):
     if pk:
@@ -133,15 +128,14 @@ def update(request, pk):
                 post = form.save(commit=False)
                 post.author = request.user
                 post.save()
-                return redirect('detail', pk=pk)
+                return redirect('user_posts', pk=object.author.id)
         else:
             form = ThingUpdateForm(instance=object)
 
         return render(request, 'update.html', {'form': form})
     
     else:
-        message = '他のアカウントの投稿は編集できません。'
-        return render(request, 'detail.html', {'message': message, 'object': object})
+        return redirect('user_posts', pk=request.user.id)
 
 
 @login_required
@@ -149,10 +143,7 @@ def delete(request, pk):
     object = get_object_or_404(MinimalModel, pk=pk)
     if object.author.id == request.user.id:
         object.delete()
-        message = '投稿は削除されました。'
-    else:
-        message = '他のアカウントの投稿は削除できません。'
-    return render(request, 'detail.html', {'message': message, 'object': object})
+    return redirect('user_posts', pk=request.user.id)
 
 # 以下、ユーザーに関するview
 def signup(request):

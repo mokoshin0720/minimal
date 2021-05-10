@@ -23,9 +23,6 @@
                 <div class="like-outer">
                     {% include 'like.html' %}
                 </div> 
-                <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary" onclick="location.href='{% url 'detail' object.pk %}'">詳細</button>
-                </div>
                 <small class="text-muted">{{ object.date }}</small>
             </div>
         </div>
