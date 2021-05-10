@@ -118,7 +118,7 @@ STATICFILES_DIR = [str(BASE_DIR / 'static')] # アプリごとにCSSを変えら
 # Userモデルについて
 AUTH_USER_MODEL = 'minimal.CustomUser'
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'user_posts'
+LOGIN_REDIRECT_URL = 'list'
 
 # 画像の保存先
 MEDIA_URL = '/media/'

@@ -15,7 +15,7 @@ def index(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('index')
+            return redirect('user_posts', pk=user.id)
     else:
         form = SignUpForm()
     return render(request, 'index.html', {'form': form})
@@ -164,7 +164,7 @@ def signup(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('index')
+            return redirect('user_posts', pk=user.id)
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
@@ -172,7 +172,7 @@ def signup(request):
 def guest_login(request):
     guest_user = CustomUser.objects.get(username='ゲスト')
     login(request, guest_user)
-    return redirect('index')
+    return redirect('user_posts', pk=guest_user.id)
 
 @login_required
 def user_detail(request, pk):
@@ -180,7 +180,7 @@ def user_detail(request, pk):
     if user.id == request.user.id:
         return render(request, 'user_detail.html', {'user': user})
     else:
-        return redirect('index')
+        return render(request, 'user_detail.html', {'user': request.user})
 
 @login_required
 def user_update(request, pk):
@@ -189,31 +189,30 @@ def user_update(request, pk):
     else:
         user = CustomUser()
 
-    if user.id == request.user.id:
-        initial_data = {
-            'username': user.username,
-            'last_name': user.last_name, 
-            'first_name': user.first_name, 
-            'email': user.email,
-            'password': '',
-        }
-        if request.method == 'POST':
-            form = UserUpdateForm(request.POST, request.FILES, instance=user)
-            if form.is_valid():
-                user = form.save(commit=False)
-                username = form.cleaned_data['username']
-                password = form.cleaned_data['password']
-                user.set_password(password)
-                user.save()
-                user = authenticate(username=username, password=password)
-                login(request, user)
-                return redirect('user_detail', pk=pk)
-        else:
-            form = UserUpdateForm(initial=initial_data, instance=user)    
-        return render(request, 'user_update.html', {'form': form, 'user': user})
-
+    if user.id != request.user.id:
+        user = get_object_or_404(CustomUser, pk=request.user.id)
+    
+    initial_data = {
+        'username': user.username,
+        'last_name': user.last_name, 
+        'first_name': user.first_name, 
+        'email': user.email,
+        'password': '',
+    }
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST, request.FILES, instance=user)
+        if form.is_valid():
+            user = form.save(commit=False)
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user.set_password(password)
+            user.save()
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            return redirect('user_detail', pk=pk)
     else:
-        return redirect('index')
+        form = UserUpdateForm(initial=initial_data, instance=user)    
+    return render(request, 'user_update.html', {'form': form, 'user': user})
     
 # ユーザー投稿ページに必要なデータを取ってくる関数
 def user_posts_base(pk):
