@@ -12,7 +12,6 @@ urlpatterns = [
     path('list_threw/', views.list_threw, name='list_threw'),
     path('create/', views.create, name='create'),
     path('like/', views.like, name='like'),
-    path('detail/<int:pk>', views.detail, name='detail'),
     path('update/<int:pk>', views.update, name='update'),
     path('delete/<int:pk>', views.delete, name='delete'),
     path('user_detail/<int:pk>', views.user_detail, name='user_detail'),

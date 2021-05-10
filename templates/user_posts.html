@@ -6,7 +6,7 @@
       <div class="col-lg-6 col-md-8 mx-auto">
 
           <h1 class="fw-light">{{ user.username }}の記録</h1>
-          <p class="lead text-muted">¥{{ buy_price_sum }}満足<br>¥{{ planed_price_sum }}売却予定<br>¥{{ sell_price_sum }}売却 </p>
+          <p class="lead text-muted">満足：{{ buy_price_sum }}円<br>手放し予定：{{ planed_price_sum }}円<br>手放した：{{ sell_price_sum }}円</p>
 
         <p>
           {% if 'satisfied' in request.path or 'planed' in request.path or 'threw' in request.path %}

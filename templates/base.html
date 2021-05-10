@@ -29,7 +29,7 @@
 
           <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
             <li><a href="{% url 'index' %}" class="nav-link px-2 text-white">ホーム</a></li>
-            <li><a href="{% url 'list' %}" class="nav-link px-2 text-white">みんなの記録</a></li>
+            <li><a href="{% url 'list' %}" class="nav-link px-2 text-white">みんなの記録</a></li>          
             {% if request.user.is_authenticated %}
             <li><a href="{% url 'create' %}" class="nav-link px-2 text-white">記録をする</a></li>
             {% endif %}
@@ -43,8 +43,8 @@
             </a>
 
             <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-              <li><a class="dropdown-item" href="{% url 'user_posts' request.user.id %}">自分の投稿</a></li>
-              <li><a class="dropdown-item" href="{% url 'user_detail' request.user.id %}">ユーザー情報</a></li>
+              <li><a class="dropdown-item" href="{% url 'user_posts' request.user.id %}">自分の記録</a></li>
+              <li><a class="dropdown-item" href="{% url 'user_detail' request.user.id %}">プロフィール</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="{% url 'logout' %}">ログアウト</a></li>
             </ul>
