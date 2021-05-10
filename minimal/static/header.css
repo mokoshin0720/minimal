@@ -11,3 +11,7 @@
   outline: 0;
   color: white;
 }
+
+.dropdown-toggle:hover {
+  color: white;
+}

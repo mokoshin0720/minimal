@@ -1,69 +1,106 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block customcss %}
+<link href="{% static 'index.css' %}" rel="stylesheet">
+{% endblock customcss %}
 
 {% block header %}
-  <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light" style="background-image: url(https://free-paper-texture.com/p/p0526/p0526_l.jpg) ; background-size: cover;">
+  <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light" style="background-image: url(https://free-paper-texture.com/p/p0526/p0526_l.jpg); background-size: cover;">
     <div class="col-md-5 p-lg-5 mx-auto my-5">
       <h1 class="display-4 fw-normal">持ち物SNS</h1>
       <p class="lead fw-normal">自分が購入した物、手放すか悩んでいるもの、手放したものを共有しよう</p>
-      {% if request.user.is_authenticated == False %}
-      <a class="btn btn-outline-secondary" href="{% url 'guest_login' %}">テストユーザーとしてログイン</a>
-      {% endif %}
     </div>
-    <div class="product-device shadow-sm d-none d-md-block"></div>
-    <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
   </div>
 {% endblock header %}
 
 {% block content %}
-<div class="container py-5" id="hanging-icons">
-  <h2 class="pb-2 border-bottom">機能紹介</h2>
-  <div class="row g-5 py-5">
-    <div class="col-md-4 d-flex align-items-start">
-      <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
-        <svg class="bi" width="1em" height="1em"><use xlink:href="#toggles2"/></svg>
+{% comment %} 1つ目の機能紹介 {% endcomment %}
+  <div class="b-example-divider"></div>
+
+  <div class="container col-xxl-8 px-4 py-5">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+      <div class="col-10 col-sm-8 col-lg-6">
+        <img src="https://minimal-shinya.s3-ap-northeast-1.amazonaws.com/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88+2021-05-10+1.42.21.png" class="d-block mx-lg-auto img-fluid" width="700" height="500" loading="lazy">
       </div>
-      <div>
-        <h2>購入したものを投稿</h2>
-        <p>購入した物を記録&シェアして、隠れた名品を発掘しよう。</p>
-        {% if request.user.is_authenticated == True %}
-        <a href="{% url 'create' %}" class="btn btn-primary">
-          投稿を作成
-        </a>
-        {% endif %}
-      </div>
-    </div>
-    <div class="col-md-4 d-flex align-items-start">
-      <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
-        <svg class="bi" width="1em" height="1em"><use xlink:href="#cpu-fill"/></svg>
-      </div>
-      <div>
-        <h2>自分がものに使った総額を可視化</h2>
-        <p>物に使った総額がわかるから、浪費の防止になり、本当に欲しいものだけを選べるように。</p>
-        {% if request.user.is_authenticated == True %}
-        <a href="{% url 'user_posts' request.user.id %}" class="btn btn-primary">
-          自分が使った金額を見る
-        </a>
-        {% endif %}
-      </div>
-    </div>
-    <div class="col-md-4 d-flex align-items-start">
-      <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
-        <svg class="bi" width="1em" height="1em"><use xlink:href="#tools"/></svg>
-      </div>
-      <div>
-        <h2>手放した後もサポート</h2>
-        <p>個人で物を売るのが当たり前の時代。物のリセールバリューを知れる。</p>
-        {% if request.user.is_authenticated == True %}
-        <a href="{% url 'list_threw' %}" class="btn btn-primary">
-          みんなの売却投稿を見る
-        </a>
-        {% endif %}
+      <div class="col-lg-6">
+        <h1 class="display-5 fw-bold lh-1 mb-3">1 : 購入した物を記録しよう</h1>
+        <p class="lead">いい感じの文章をちょっと書くかも...</p>
       </div>
     </div>
   </div>
-</div>
 
+{% comment %} 2つ目の機能紹介 {% endcomment %}
+  <div class="b-example-divider"></div>
 
+  <div class="container col-xxl-8 px-4 py-5">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+      <div class="col-10 col-sm-8 col-lg-6">
+        <img src="https://free-paper-texture.com/p/p0526/p0526_l.jpg" class="d-block mx-lg-auto img-fluid" width="700" height="500" loading="lazy">
+      </div>
+      <div class="col-lg-6">
+        <h1 class="display-5 fw-bold lh-1 mb-3">2 : 物に使った金額が一目でわかる</h1>
+        <p class="lead">いい感じの文章をちょっと書くかも...</p>
+      </div>
+    </div>
+  </div>
+
+{% comment %} 3つ目の機能紹介 {% endcomment %}
+  <div class="b-example-divider"></div>
+
+  <div class="container col-xxl-8 px-4 py-5">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+      <div class="col-10 col-sm-8 col-lg-6">
+        <img src="https://free-paper-texture.com/p/p0526/p0526_l.jpg" class="d-block mx-lg-auto img-fluid" width="700" height="500" loading="lazy">
+      </div>
+      <div class="col-lg-6">
+        <h1 class="display-5 fw-bold lh-1 mb-3">3 : みんなの投稿をみて、手放す理由を参考に</h1>
+        <p class="lead">いい感じの文章をちょっと書くかも...</p>
+      </div>
+    </div>
+  </div>
+
+{% if request.user.is_authenticated == False %}
+  <div class="b-example-divider"></div>
+
+  <div class="container col-xl-10 col-xxl-8 px-4 py-5">
+    <div class="row align-items-center g-lg-5 py-5">
+      <div class="col-lg-7 text-center text-lg-start">
+        <h1 class="display-4 fw-bold lh-1 mb-3">ユーザー登録</h1>
+        <p class="col-lg-10 fs-4">早速登録をして、投稿を記録してみよう。</p>
+      </div>
+      <div class="col-md-10 mx-auto col-lg-5">
+        <form method="post" class="p-4 p-md-5 border rounded-3 bg-light">
+    {% csrf_token %}
+    {% for item in form %}
+      {% if item.label == "ユーザー名" or item.label == "パスワード" or item.label == "パスワード(確認用)" or item.label == "Eメールアドレス" %}
+        <div class="form-group">
+            <label for="{{item.id_for_label}}">{{item.label}}</label>
+            <input 
+                type="{{item.field.widget.input_type}}"
+                class="form-control" 
+                {% if item.field.required %}required{% endif %} 
+                name="{{item.name}}" 
+                id="{{item.id_for_label}}">
+        </div>
+      {% endif %}
+    {% endfor %}
+    <button class="w-100 btn btn-lg btn-primary" type="submit">ユーザー登録</button>
+    <hr class="my-4">
+          <small class="text-muted">既に用意してあるテストユーザーでログインすることもできます。</small>
+          <a class="btn btn-outline-secondary" href="{% url 'guest_login' %}" onclick="login_func()">テストユーザーとしてログイン</a>
+</form>
+{% endif %}
+
+      </div>
+    </div>
+  </div>
+
+<script>
+function login_func() {
+  alert("テストユーザーでログインしました！\nページをリロードします。");
+}
+</script>
 
  
 {% endblock %}

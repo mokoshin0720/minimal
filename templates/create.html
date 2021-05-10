@@ -1,10 +1,29 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block customcss %}
+<link href="{% static 'create.css' %}" rel="stylesheet">
+{% endblock customcss %}
 
 {% block content %}
-  <h1>新しく物を追加する</h1>
+  <h2>新しく物を追加する</h2>
+  <main class="form-signin">
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form.as_p }}
+    {% for field in form %}
+      <p>
+        {{ field.label_tag }}<br>
+        {{ field }}
+        {% if field.name == "buy_price" %}円{% endif %}
+        {% if field.help_text %}
+          <small style="color: grey">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+      </p>
+    {% endfor %}
     <button type="submit">投稿する</button>
   </form>
+  </main>
 {% endblock %}

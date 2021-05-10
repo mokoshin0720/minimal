@@ -13,14 +13,14 @@
     <title>Minimal App</title>
     {% endblock title %}
 
-    {% block customcss %}
     <link href="{% static 'header.css' %}" rel="stylesheet">
+    {% block customcss %}
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     {% endblock customcss %}
   </head>
 
   <body>
-    <header class="p-3 bg-dark text-white">
+    <header class="p-3 bg-dark text-white fixed-top">
       <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
           <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
@@ -29,9 +29,9 @@
 
           <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
             <li><a href="{% url 'index' %}" class="nav-link px-2 text-white">ホーム</a></li>
-            <li><a href="{% url 'list' %}" class="nav-link px-2 text-white">投稿一覧</a></li>
+            <li><a href="{% url 'list' %}" class="nav-link px-2 text-white">みんなの記録</a></li>
             {% if request.user.is_authenticated %}
-            <li><a href="{% url 'create' %}" class="nav-link px-2 text-white">投稿作成</a></li>
+            <li><a href="{% url 'create' %}" class="nav-link px-2 text-white">記録をする</a></li>
             {% endif %}
           </ul>
 
@@ -63,5 +63,11 @@
 
     {% block content %}
     {% endblock content %}
+<script type="text/javascript">
+$(window).on('load resize', function(){
+    var height = $('.fixed-top').height();
+    $('body').css('padding-top',height+40); 
+});
+</script>
 
 </body>

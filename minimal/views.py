@@ -7,7 +7,19 @@ from django.http import JsonResponse, HttpResponseServerError
 from django.views.decorators.csrf import requires_csrf_token
 
 def index(request):
-    return render(request, 'index.html')
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('index')
+    else:
+        form = SignUpForm()
+    return render(request, 'index.html', {'form': form})
+
 @login_required
 def home(request):
     user = request.user
