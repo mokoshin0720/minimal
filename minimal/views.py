@@ -143,7 +143,7 @@ def delete(request, pk):
     object = get_object_or_404(MinimalModel, pk=pk)
     if object.author.id == request.user.id:
         object.delete()
-    return redirect('user_posts', pk=request.user.id)
+    return redirect(request.META['HTTP_REFERER'])
 
 # 以下、ユーザーに関するview
 def signup(request):
