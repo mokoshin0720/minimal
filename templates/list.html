@@ -40,60 +40,76 @@
 {% block content %}
   <div class="album py-5 bg-light">
     <div class="container">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-    {% for object in objects %}
-    <div class="col">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      {% for object in objects %}
+        <div class="col">
           <div class="card shadow-sm">
-          <small class="text-muted"><a href="{% url 'user_posts' object.author.id %}">@{{ object.author }}</a></small>
-          <h5>{{ object }}</h5>
+            <a href="{% url 'user_posts' object.author.id %}" class="text-black">
+            <img src="{{ request.user.image.url }}" alt="mdo" width="30" height="30" class="rounded-circle">
+            @{{ object.author }}
+            </a>
+            <br><p>{{ object }}</p>
             <img class="bd-placeholder-img card-img-top" width="100%" height="100%" src="{{ object.obj_image.url }}">
             <div class="card-body">
-            {% if request.path == "/list/" %}
-              <p class="text-muted">現状：{{ object.status }}</p>
-            {% endif %}
-
+              {% if request.path == "/list/" %}
+                <p class="text-muted">現状：{{ object.status }}</p>
+              {% endif %}
                 購入理由：<p class="card-text">{{ object.buy_reason }}</p>
-            {% if object.status.id == 3 %} {% comment %} 状態＝手放したの時 {% endcomment %}
+              {% if object.status.id == 3 %} {% comment %} 状態＝手放したの時 {% endcomment %}
                 {% if object.sell_reason is None %}
-                売却理由：<p class="card-text"></p>
+                  売却理由：<p class="card-text"></p>
                 {% else %}
-                売却理由：<p class="card-text">{{ object.sell_reason }}</p>
+                  売却理由：<p class="card-text">{{ object.sell_reason }}</p>
                 {% endif %}
-            {% endif %}
+              {% endif %}
             
-<div class="accordion" id="accordion_{{ object.pk }}">
+              <div class="accordion" id="accordion_{{ object.pk }}">
+                <div class="accordion-item">
+                <h2 class="accordion-header" id="heading_{{ object.pk }}">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_{{ object.pk }}" aria-expanded="false" aria-controls="collapse_{{ object.pk }}">
+                詳細
+                </button>
+                </h2>
+                <div id="collapse_{{ object.pk }}" class="accordion-collapse collapse" aria-labelledby="heading_{{ object.pk }}" data-bs-parent="#accordion_{{ object.pk }}">
+                  <div class="accordion-body">
+                  購入金額：{{ object.buy_price }}円<br>
+                  購入日：{{ object.buy_date }}<br>
+                  {% if object.sell_price is not None %}
+                    売却金額：{{ object.sell_price }}円
+                  {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
 
-<div class="accordion-item">
-    <h2 class="accordion-header" id="heading_{{ object.pk }}">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_{{ object.pk }}" aria-expanded="false" aria-controls="collapse_{{ object.pk }}">
-        詳細
-      </button>
-    </h2>
-    <div id="collapse_{{ object.pk }}" class="accordion-collapse collapse" aria-labelledby="heading_{{ object.pk }}" data-bs-parent="#accordion_{{ object.pk }}">
-      <div class="accordion-body">
-        購入金額：{{ object.buy_price }}円<br>
-        購入日：{{ object.buy_date }}<br>
-
-        {% if object.sell_price is not None %}
-        売却金額：{{ object.sell_price }}円
-        {% endif %}
-        
-      </div>
-    </div>
-  </div>
-
-</div>
-
-              <div class="d-flex justify-content-between align-items-center">
+              {% comment %} <div class="d-flex justify-content-between align-items-center">
               <div class="like-outer">
                     {% include 'like.html' %}
               </div> 
+              </div> {% endcomment %}
+            <div class="d-flex">
+              <div class="mr-auto p-2">
+                <div class="like-outer">
+                  {% include 'like.html' %}
+                </div> 
               </div>
-            </div>
+
+              {% if request.user.id == object.author.id %}
+              <div class="p-2"> 
+                <button type="button" class="btn btn-sm btn-outline-secondary" onclick="location.href='{% url 'update' pk=object.pk %}'">編集する</button>
+              </div>
+              <div class="p-2"> 
+                <button type="button" class="btn btn-sm btn-outline-secondary delete_btn" delete_id="{{ object.pk }}">削除する</button>
+              </div>
+              {% endif %}
+            </div> 
+          </div>
           </div>
         </div>
     {% endfor %}
     </div>
+  </div>
+</div>
 
 <script type="text/javascript">
 {% if user.is_authenticated %}

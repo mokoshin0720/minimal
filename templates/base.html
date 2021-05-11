@@ -26,20 +26,33 @@
           <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
           <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
           </a>
+<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
 
-          <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="{% url 'index' %}" class="nav-link px-2 text-white">ホーム</a></li>
-            <li><a href="{% url 'list' %}" class="nav-link px-2 text-white">みんなの記録</a></li>          
+            <li><a href="{% url 'index' %}" class="btn btn-outline-secondary text-white">ホーム</a></li>
             {% if request.user.is_authenticated %}
-            <li><a href="{% url 'create' %}" class="nav-link px-2 text-white">記録をする</a></li>
+            <li><a href="{% url 'create' %}" class="btn btn-outline-secondary text-white">記録をする</a></li>
             {% endif %}
-          </ul>
+
+<div class="dropdown">
+  <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+    みんなの記録
+  </a>
+
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+    <li><a class="dropdown-item" href="{% url 'list' %}">一覧</a></li>
+    <li><a class="dropdown-item" href="{% url 'list_satisfied' %}">満足しているもの</a></li>
+    <li><a class="dropdown-item" href="{% url 'list_planed' %}">悩んでいるもの</a></li>
+    <li><a class="dropdown-item" href="{% url 'list_threw' %}">手放したもの</a></li>
+  </ul>
+</div>
+
+</ul>
 
       {% if request.user.is_authenticated %}
           <div class="dropdown text-end">
-            <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-            {{ request.user }}
+            <a href="#" class="btn btn-outline-secondary text-white dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
             <img src="{{ request.user.image.url }}" alt="mdo" width="32" height="32" class="rounded-circle">
+            {{ request.user }}
             </a>
 
             <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">

@@ -1,13 +1,18 @@
 <div class="col">
     <div class="card shadow-sm">
-        <small class="text-muted">@{{ object.author }}</small>
-        <p>{{ object }}</p>
+
+          <a href="{% url 'user_posts' object.author.id %}" class="text-black">
+          <img src="{{ request.user.image.url }}" alt="mdo" width="30" height="30" class="rounded-circle">
+          @{{ object.author }}
+          </a>
+
+          <br><p>{{ object }}</p>
         <img class="bd-placeholder-img card-img-top" width="100%" height="100%" src="{{ object.obj_image.url }}">
 
         <div class="card-body">
             {% if 'satisfied' in request.path or 'planed' in request.path or 'threw' in request.path %}
             {% else %}
-              <p class="text-muted">状態：{{ object.status }}</p>
+              <p class="text-muted">現状：{{ object.status }}</p>
             {% endif %}
 
                 購入理由：<p class="card-text">{{ object.buy_reason }}</p>
@@ -47,7 +52,6 @@
         <div class="like-outer">
             {% include 'like.html' %}
         </div> 
-        <small class="text-muted">{{ object.date }}</small>
     </div>
 
     {% if request.user.id == object.author.id %}
