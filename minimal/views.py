@@ -108,7 +108,7 @@ def create(request):
             post = form.save(commit=False)
             post.author = request.user
             post.save()            
-            return redirect('list')
+            return redirect('user_posts', pk=request.user.id)
     else:
         form = ThingForm
     return render(request, 'create.html', {'form': form})
