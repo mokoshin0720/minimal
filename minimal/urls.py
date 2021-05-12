@@ -17,7 +17,7 @@ urlpatterns = [
     path('user_detail/<int:pk>', views.user_detail, name='user_detail'),
     path('user_update/<int:pk>', views.user_update, name='user_update'),
     path('user_posts/<int:pk>', views.user_posts, name='user_posts'),
-    path('user_posts/satisfied/<int:pk>', views.user_posts, name='user_posts_satisfied'),
-    path('user_posts/planed/<int:pk>', views.user_posts, name='user_posts_planed'),
-    path('user_posts/threw/<int:pk>', views.user_posts, name='user_posts_threw'),   
+    path('user_posts/satisfied/<int:pk>', views.user_posts_satisfied, name='user_posts_satisfied'),
+    path('user_posts/planed/<int:pk>', views.user_posts_planed, name='user_posts_planed'),
+    path('user_posts/threw/<int:pk>', views.user_posts_threw, name='user_posts_threw'),
 ]

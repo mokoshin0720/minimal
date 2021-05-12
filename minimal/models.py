@@ -24,6 +24,8 @@ class MinimalModel(models.Model):
     buy_price = models.PositiveIntegerField(verbose_name='購入金額')
     sell_price = models.IntegerField(null=True, blank=True, verbose_name='売却金額')
     nice_throw = models.IntegerField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title

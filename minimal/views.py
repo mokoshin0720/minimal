@@ -5,6 +5,7 @@ from .forms import SignUpForm, ThingForm, ThingUpdateForm, UserUpdateForm
 from .models import CustomUser, Like, MinimalModel
 from django.http import JsonResponse, HttpResponseServerError
 from django.views.decorators.csrf import requires_csrf_token
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def index(request):
     if request.method == 'POST':
@@ -25,57 +26,75 @@ def home(request):
     user = request.user
     return render(request, 'home.html', {'user':user})
 
-def like_list(request, objects):
+def like_list(request, page_obj):
     liked_list = []
-    for object in objects:
+    for object in page_obj:
         liked = object.like_set.filter(user=request.user)
         if liked.exists():
             liked_list.append(object.id)
     context = {
-        'objects': objects,
+        'page_obj': page_obj,
         'liked_list': liked_list,
     }
     return context
 
+# ページネーションの元となる関数
+def paginate_query(request, queryset, count):
+  paginator = Paginator(queryset, count)
+  page = request.GET.get('page')
+  try:
+    page_obj = paginator.page(page)
+  except PageNotAnInteger:
+    page_obj = paginator.page(1)
+  except EmptyPage:
+    page_obj = paginator.page(paginator.num_pages)
+  return page_obj
+
+PAGE_PER_ITEM = 2
+
 def list(request):
-    objects = MinimalModel.objects.all()
+    all_objects = MinimalModel.objects.order_by('-created_at')
+    page_obj = paginate_query(request, all_objects, PAGE_PER_ITEM)   # ページネーション
 
     if request.user.is_authenticated:
-        context = like_list(request, objects)
+        context = like_list(request, page_obj)
         return render(request, 'list.html', context)
 
     else:
-        return render(request, 'list.html', {'objects': objects})
+        return render(request, 'list.html', {'page_obj': page_obj})
 
 def list_satisfied(request):
-    objects = MinimalModel.objects.filter(status__name='満足')
+    all_objects = MinimalModel.objects.filter(status__name='満足').order_by('-created_at')
+    page_obj = paginate_query(request, all_objects, PAGE_PER_ITEM)
 
     if request.user.is_authenticated:
-        context = like_list(request, objects)
+        context = like_list(request, page_obj)
         return render(request, 'list.html', context)
 
     else:
-        return render(request, 'list.html', {'objects': objects})
+        return render(request, 'list.html', {'page_obj': page_obj})
 
 def list_planed(request):
-    objects = MinimalModel.objects.filter(status__name='手放し予定')
+    all_objects = MinimalModel.objects.filter(status__name='手放し予定').order_by('-created_at')
+    page_obj = paginate_query(request, all_objects, PAGE_PER_ITEM)
 
     if request.user.is_authenticated:
-        context = like_list(request, objects)
+        context = like_list(request, page_obj)
         return render(request, 'list.html', context)
 
     else:
-        return render(request, 'list.html', {'objects': objects})
+        return render(request, 'list.html', {'page_obj': page_obj})
 
 def list_threw(request):
-    objects = MinimalModel.objects.filter(status__name='手放した')
+    all_objects = MinimalModel.objects.filter(status__name='手放した').order_by('-created_at')
+    page_obj = paginate_query(request, all_objects, PAGE_PER_ITEM)
 
     if request.user.is_authenticated:
-        context = like_list(request, objects)
+        context = like_list(request, page_obj)
         return render(request, 'list.html', context)
 
     else:
-        return render(request, 'list.html', {'objects': objects})
+        return render(request, 'list.html', {'page_obj': page_obj})
 
 @login_required
 def like(request):
@@ -206,12 +225,12 @@ def user_update(request, pk):
     return render(request, 'user_update.html', {'form': form, 'user': user})
     
 # ユーザー投稿ページに必要なデータを取ってくる関数
-def user_posts_base(pk):
+def user_posts_base(request, pk):
     user = get_object_or_404(CustomUser, pk=pk)
-    object_list = MinimalModel.objects.filter(author=user)
-    satisfied_list = MinimalModel.objects.filter(author=user, status__name='満足')
-    planed_list = MinimalModel.objects.filter(author=user, status__name='手放し予定')
-    threw_list = MinimalModel.objects.filter(author=user, status__name='手放した')
+    object_list = MinimalModel.objects.filter(author=user).order_by('-created_at')
+    satisfied_list = MinimalModel.objects.filter(author=user, status__name='満足').order_by('-created_at')
+    planed_list = MinimalModel.objects.filter(author=user, status__name='手放し予定').order_by('-created_at')
+    threw_list = MinimalModel.objects.filter(author=user, status__name='手放した').order_by('-created_at')
 
     buy_price_sum = 0
     planed_price_sum = 0
@@ -224,7 +243,7 @@ def user_posts_base(pk):
         if i.buy_price is not None: planed_price_sum += i.buy_price
     
     for i in threw_list:
-        if i.sell_price is not None: sell_price_sum += i.sell_price
+        if i.sell_price is not None: sell_price_sum += i.sell_price    
 
     buy_price_sum = "{:,}".format(buy_price_sum)
     planed_price_sum = "{:,}".format(planed_price_sum)
@@ -244,7 +263,27 @@ def user_posts_base(pk):
     return context
 
 def user_posts(request, pk):
-    context = user_posts_base(pk)
+    context = user_posts_base(request, pk)
+    page_obj = paginate_query(request, context['object_list'], PAGE_PER_ITEM)
+    context['page_obj'] = page_obj
+    return render(request, 'user_posts.html', context)
+
+def user_posts_satisfied(request, pk):
+    context = user_posts_base(request, pk)
+    page_obj = paginate_query(request, context['satisfied_list'], PAGE_PER_ITEM)
+    context['page_obj'] = page_obj
+    return render(request, 'user_posts.html', context)
+
+def user_posts_planed(request, pk):
+    context = user_posts_base(request, pk)
+    page_obj = paginate_query(request, context['planed_list'], PAGE_PER_ITEM)
+    context['page_obj'] = page_obj
+    return render(request, 'user_posts.html', context)
+
+def user_posts_threw(request, pk):
+    context = user_posts_base(request, pk)
+    page_obj = paginate_query(request, context['threw_list'], PAGE_PER_ITEM)
+    context['page_obj'] = page_obj
     return render(request, 'user_posts.html', context)
 
 # 自作server_error
