@@ -72,7 +72,7 @@ DATABASES = {
         'HOST': 'db',
         'PORT': '5432',
         'TEST': {
-            'NAME': 'test_mydb',
+            'NAME': 'test_postgres',
             'MIRROR': 'default'
         }
     }
