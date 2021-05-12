@@ -71,10 +71,6 @@ DATABASES = {
         'PASSWORD': 'postgres',
         'HOST': 'db',
         'PORT': '5432',
-        'TEST': {
-            'NAME': 'test_postgres',
-            'MIRROR': 'default'
-        }
     }
 }
 
