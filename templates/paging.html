@@ -1,17 +1,26 @@
-<div class="pagination">
-    <span class="step-links">
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
         {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        <li class="page-item">
+            <a href="?page=1" class="page-link">&laquo; 最初</a>
+        </li>
+        <li class="page-item">
+            <a href="?page={{ page_obj.previous_page_number }}" class="page-link">{{ page_obj.previous_page_number }}</a>
+        </li>
         {% endif %}
+        </li>
 
-        <span class="current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-        </span>
+        <li class="page-item active">
+            <a href="?page={{ page_obj.number }}" class="page-link">{{ page_obj.number }}</a>
+        </li>
 
         {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">next</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        <li class="page-item">
+            <a href="?page={{ page_obj.next_page_number }}" class="page-link">{{ page_obj.next_page_number }}</a>
+        </li>
+        <li class="page-item">
+            <a href="?page={{ page_obj.paginator.num_pages }}" class="page-link">最後 &raquo;</a>
+        </li>
         {% endif %}
-    </span>
-</div>
+  </ul>
+</nav>
