@@ -134,9 +134,6 @@ except ImportError:
     pass
 
 if not DEBUG:
-    print("="*30)
-    print("test&production development")
-    print("="*30)
     BASE_DIR = environ.Path(__file__) - 2
     env = environ.Env()
     READ_DOT_ENV_FILE = env.bool('DJANGO_READ_DOT_ENV_FILE', default=False)
@@ -154,8 +151,16 @@ if not DEBUG:
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-    db_from_env = dj_database_url.config(conn_max_age=500)
-    DATABASES['default'].update(db_from_env)
-
-    import django_heroku
-    django_heroku.settings(locals())
+    PRODUCTION_ENV = env.bool('PRODUCTION_ENV', default=True)
+    if PRODUCTION_ENV:
+        print("="*30)
+        print("Production environment")
+        print("="*30)
+        import django_heroku
+        django_heroku.settings(locals())
+        db_from_env = dj_database_url.config(conn_max_age=600, ssl_require=True)
+        DATABASES['default'].update(db_from_env)
+    else:
+        print("="*30)
+        print("Test environment")
+        print("="*30)
