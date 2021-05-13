@@ -13,17 +13,17 @@
 ## 🌐 アプリURL
 ### https://minimal-shinya.herokuapp.com/
 
-## 💬 Install
+## 💬 インストール
 `git clone https://github.com/mokoshin0720/minimal.git`</br>
 `docker-compose build`</br>
 `docker-compose up -d`</br>
 `docker-compose exec web bash`</br>
 `python manage.py runserver 0:8000`</br>
 
-## 📦 Features
+## 📦 機能一覧
 - ユーザー登録
 - ログイン&テストユーザーログイン
 - 投稿作成 / 編集 / 削除
 - カテゴリごとの投稿閲覧
 - いいね機能
-
+- CI/CD
