@@ -22,7 +22,7 @@ class MinimalModel(models.Model):
     obj_image = models.ImageField(upload_to='', blank=True, null=True, default='default_thing_icon.png', verbose_name='物の画像')
     buy_date = models.DateField(verbose_name='購入日')
     buy_price = models.PositiveIntegerField(verbose_name='購入金額')
-    sell_price = models.IntegerField(null=True, blank=True, verbose_name='売却金額')
+    sell_price = models.PositiveIntegerField(null=True, blank=True, verbose_name='売却金額')
     nice_throw = models.IntegerField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
