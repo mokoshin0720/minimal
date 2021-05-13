@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.db.models.fields.files import ImageField
 from .models import CustomUser, MinimalModel, ThingStatus
 import datetime
 
@@ -24,11 +25,19 @@ class SignUpForm(UserCreationForm):
         label='Eメールアドレス'
     )
 
+    image = forms.ImageField(
+        label = "ユーザー画像",
+        help_text="オプション"
+    )
+
     class Meta:
         model = CustomUser
-        fields = ('username', 'last_name', 'first_name', 'email', 'password1', 'password2')
+        fields = ('username', 'last_name', 'first_name', 'image', 'email', 'password1', 'password2')
 
 class UserUpdateForm(forms.ModelForm):
+    image = forms.ImageField(
+        label='ユーザー画像',
+    )
     class Meta:
         model = CustomUser
         fields = ('username', 'last_name', 'first_name', 'email', 'image', 'password')
@@ -58,6 +67,9 @@ class ThingForm(forms.ModelForm):
         fields = ('title', 'buy_reason', 'obj_image', 'buy_date', 'buy_price', 'status')
 
 class ThingUpdateForm(forms.ModelForm):
+    obj_image = forms.ImageField(
+        label='モノの画像',
+    )
     class Meta:
         model = MinimalModel
         fields = ('title', 'buy_reason', 'sell_reason' , 'obj_image', 'buy_date', 'buy_price', 'sell_price', 'status')
