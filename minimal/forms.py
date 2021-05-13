@@ -24,15 +24,9 @@ class SignUpForm(UserCreationForm):
         help_text='有効なメールアドレスを入力してください',
         label='Eメールアドレス'
     )
-
-    image = forms.ImageField(
-        label = "ユーザー画像",
-        help_text="オプション"
-    )
-
     class Meta:
         model = CustomUser
-        fields = ('username', 'last_name', 'first_name', 'image', 'email', 'password1', 'password2')
+        fields = ('username', 'last_name', 'first_name', 'email', 'password1', 'password2')
 
 class UserUpdateForm(forms.ModelForm):
     image = forms.ImageField(
