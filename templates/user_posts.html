@@ -53,14 +53,6 @@
   </div>
 
 <script type="text/javascript">
-$(".card-text").each(function(){
-  var txt = $(this).text();
-  if(txt.length > 30){
-    txt = txt.substr(0, 30);
-    $(this).text(txt + "･･･");
-  }
-});
-
 {% if user.is_authenticated %}
     $(document).ready(function(event){
         $(document).on('click', '#like', function(event){

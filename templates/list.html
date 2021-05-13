@@ -137,14 +137,6 @@
     });
 {% endif %}
 
-$(".card-text").each(function(){
-  var txt = $(this).text();
-  if(txt.length > 30){
-      txt = txt.substr(0, 30);
-      $(this).text(txt + "･･･");
-  }
-});
-
 $(".delete_btn").on("click", function() {
     if(!confirm('本当に削除しますか？')){
       return false;
