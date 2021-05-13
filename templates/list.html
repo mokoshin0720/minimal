@@ -48,7 +48,7 @@
         <div class="col">
           <div class="card shadow-sm">
             <a href="{% url 'user_posts' object.author.id %}" class="text-black">
-            <img src="{{ request.user.image.url }}" alt="mdo" width="30" height="30" class="rounded-circle">
+            <img src="{{ object.author.image.url }}" alt="mdo" width="30" height="30" class="rounded-circle">
             @{{ object.author }}
             </a>
             <br><p>{{ object }}</p>
