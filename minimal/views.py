@@ -50,7 +50,7 @@ def paginate_query(request, queryset, count):
     page_obj = paginator.page(paginator.num_pages)
   return page_obj
 
-PAGE_PER_ITEM = 2
+PAGE_PER_ITEM = 6
 
 def list(request):
     all_objects = MinimalModel.objects.order_by('-created_at')
