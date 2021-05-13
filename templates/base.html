@@ -33,6 +33,21 @@
             <li><a href="{% url 'create' %}" class="btn btn-outline-secondary text-white">記録をする</a></li>
             {% endif %}
 
+{% if request.user.is_authenticated %}
+<div class="dropdown">
+  <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+    自分の記録
+  </a>
+
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+    <li><a class="dropdown-item" href="{% url 'user_posts' request.user.id %}">一覧</a></li>
+    <li><a class="dropdown-item" href="{% url 'user_posts_satisfied' request.user.id %}">満足しているもの</a></li>
+    <li><a class="dropdown-item" href="{% url 'user_posts_planed' request.user.id %}">悩んでいるもの</a></li>
+    <li><a class="dropdown-item" href="{% url 'user_posts_threw' request.user.id %}">手放したもの</a></li>
+  </ul>
+</div>
+{% endif %}
+
 <div class="dropdown">
   <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
     みんなの記録
@@ -56,7 +71,6 @@
             </a>
 
             <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-              <li><a class="dropdown-item" href="{% url 'user_posts' request.user.id %}">自分の記録</a></li>
               <li><a class="dropdown-item" href="{% url 'user_detail' request.user.id %}">プロフィール</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="{% url 'logout' %}">ログアウト</a></li>

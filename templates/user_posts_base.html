@@ -16,7 +16,7 @@
             {% endif %}
 
                 購入理由：<p class="card-text">{{ object.buy_reason }}</p>
-            {% if object.status.id == 1 %} {% comment %} 状態＝手放したの時 {% endcomment %}
+            {% if object.status.id == 3 %} {% comment %} 状態＝手放したの時 {% endcomment %}
                 {% if object.sell_reason is None %}
                 売却理由：<p class="card-text"></p>
                 {% else %}

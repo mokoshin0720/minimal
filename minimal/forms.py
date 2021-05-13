@@ -20,7 +20,7 @@ class SignUpForm(UserCreationForm):
 
     email = forms.EmailField(
         max_length=254,
-        help_text='オプション　有効なメールアドレスを入力してください',
+        help_text='有効なメールアドレスを入力してください',
         label='Eメールアドレス'
     )
 
