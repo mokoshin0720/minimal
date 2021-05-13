@@ -1,1 +1,2 @@
-# minimal
+# 持ち物SNS
+
