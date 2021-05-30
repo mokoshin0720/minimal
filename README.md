@@ -5,7 +5,9 @@
 ## 🖥 使用技術
 - Python(Django)
 - PostgreSQL
-- jQuery
+- JavaScript(jQuery)
+- Bootstrap5
+- Docker
 - AWS S3
 - Travis CI
 - Heroku
